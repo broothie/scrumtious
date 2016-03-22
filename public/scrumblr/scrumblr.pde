@@ -12,36 +12,47 @@ Column[] COLUMNS = {
 
 
 void setup(){
-    size(window.innerWidth, window.innerHeight);
-    // size(500, 500);
+    // Initialize data structures
     interactables = new ArrayList();
-    interactables.add(new PlusButton('+', 0.92, 0.9, 0.07, color(#FAFAD2)));
+    interactables.add(new PlusButton(0.92, 0.90, 0.05));
+    currentSticky = null;
+
+    // Set up backspace KeyTrap
+    KeyTrap.trap(document.getElementById('stage'), [8], function(){
+        if(currentSticky != null){
+            currentSticky.content = currentSticky.content.substr(0, currentSticky.content.length - 1);
+        }
+    });
 }
 
 
 void draw(){
-    // println(mouseX, mouseY);
-    // Overwrite previous draw loop
     size(window.innerWidth, window.innerHeight);
-    background(#FFFAFA);
 
     // Draw columns
     float columnInterval = ceil(width/COLUMNS.length);
     noStroke();
+    textAlign(CENTER, TOP);
+    textSize(30);
     for(int counter = 0; counter < COLUMNS.length; counter++){
+        // Draw columns
         fill(COLUMNS[counter].hue);
         rect(counter*columnInterval, 0, columnInterval, height);
-        // TODO Add text to top of screen
+        // Draw titles
+        fill(#000000);
+        text(COLUMNS[counter].title, counter*columnInterval, 0, columnInterval, height);
     }
 
     // Update everything
     for(int counter = 0; counter < interactables.size(); counter++){
         Interactable interactable = (Interactable) interactables.get(counter);
-        interactable.update();
+        interactable.paint();
     }
 }
 
+
 void mousePressed(){
+    // Execute whatever interactable is current
     for(int counter = 0; counter < interactables.size(); counter++){
         Interactable interactable = (Interactable) interactables.get(counter);
         if(interactable.isMousedOver()){
@@ -51,8 +62,23 @@ void mousePressed(){
     }
 }
 
+
+boolean shiftDown = false;
 void keyPressed(){
-    if(currentSticky != null){
-        currentSticky.content += key;
+    if(key == CODED){
+        if(keyCode == SHIFT){
+            shiftDown = true;
+        }
+    }else{
+        if(currentSticky != null){
+            currentSticky.content += shiftDown ? str(key).toUpperCase() : str(key).toLowerCase();
+        }
+    }
+}
+void keyReleased(){
+    if(key == CODED){
+        if(keyCode == SHIFT){
+            shiftDown = false;
+        }
     }
 }

@@ -1,5 +1,8 @@
 /* js/client.js */
 
+// Set focus to canvas so that keys are caught by KeyTrap
+document.getElementById('stage').focus();
+
 var eurecaServer;
 
 var eurecaClientSetup = function(){
@@ -15,6 +18,6 @@ var eurecaClientSetup = function(){
     };
 
     eurecaClient.exports.updateState = function(payload){
-        
+
     };
 };

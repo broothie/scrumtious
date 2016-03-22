@@ -2,6 +2,8 @@
   Scrumblr models
 */
 
+final color STICKY_COLOR = color(#FAFAD2);
+
 class Column {
     public String title;
     public color hue;
@@ -13,12 +15,12 @@ class Column {
 }
 
 class Drawable {
-    private float xPosDraw;
-    private float yPosDraw;
-    private float xSizeDraw;
-    private float ySizeDraw;
+    private float xDrawPos;
+    private float yDrawPos;
+    private float xDrawSize;
+    private float yDrawSize;
 
-    private void paint();
+    public void paint();
 }
 
 
@@ -33,84 +35,113 @@ class Interactable extends Drawable {
     private float ySizeScale;
     private color hue;
 
-    public void execute();
-    public void update();
+    Interactable(float x_scale, float y_scale, float x_size_scale, float y_size_scale, color hu){
+        this.xScale = x_scale;
+        this.yScale = y_scale;
+        this.xSizeScale = x_size_scale;
+        this.ySizeScale = y_size_scale;
+        this.hue = hu;
+    }
 
+    private void update();
     private boolean isMousedOver();
 
-    // boolean isMousedOver(){
-    //     return this.xPos - this.xSize/2 < mouseX &&
-    //            mouseX < this.xPos + this.xSize/2 &&
-    //            this.yPos - this.ySize/2 < mouseY &&
-    //            mouseY < this.yPos + this.ySize/2;
-    // }
+    public void execute();
 }
 
 
 class Button extends Interactable {
-    public String label;
-    public float xScale, yScale, dimScale;
-    public color hue;
+    private String label;
+    private float sizeScale;
+    private float size;
+    private float drawSize;
 
-    Button(String txt, float x_scale, float y_scale, float dim_scale, color hu){
+    Button(String txt, float x_scale, float y_scale, float size_scale, color hu){
+        super(x_scale, y_scale, size_scale, size_scale, hu);
         this.label = txt;
-        this.xScale = x_scale;
-        this.yScale = y_scale;
-        this.dimScale = dim_scale;
-        this.hue = hu;
+        this.sizeScale = size_scale;
     }
 
-    void execute(){
-        // println("IT HAPPENED!");
-        currentSticky = new Sticky('', mouseX, mouseY, 0.1);
-        interactables.add(currentSticky);
+    private boolean isMousedOver(){
+        return dist(this.xPos, this.yPos, mouseX, mouseY) < this.xSize/2;
     }
 
-    void update(){
+    private void update(){
         // Update location data
         this.xPos = width * this.xScale;
         this.yPos = height * this.yScale;
-        this.xSize = this.ySize = width * this.dimScale;
-        // Draw
-        this.paint();
+        this.size = this.xSize = this.ySize = width * this.sizeScale;
+        // Update draw location data
+        this.xDrawPos = this.xPos;
+        this.yDrawPos = this.yPos;
+        this.xDrawSize = this.yDrawSize = this.size;
     }
 
-    void paint(){
+    public void paint(){
+        // Update
+        this.update();
         // Draw shape
         noStroke();
         fill(this.hue);
-        ellipse(this.xPos, this.yPos, this.xSize, this.ySize);
+        ellipse(this.xDrawPos, this.yDrawPos, this.xDrawSize, this.yDrawSize);
 
         // Highlight if necessary
         if(this.isMousedOver()){
             stroke(#000000);
             noFill();
-            ellipse(this.xPos, this.yPos, this.xSize, this.ySize);
+            ellipse(this.xDrawPos, this.yDrawPos, this.xDrawSize, this.yDrawSize);
         }
 
         // Draw text
         noStroke();
         fill(color(#000000));
-        text(this.label, this.xPos, this.yPos, this.xSize, this.ySize);
+        textAlign(CENTER, CENTER);
+        textSize(20);
+        text(this.label, this.xDrawPos-this.xDrawSize/2, this.yDrawPos-this.yDrawSize/2, this.xDrawSize, this.yDrawSize);
+    }
+}
+
+
+class PlusButton extends Button {
+    final String LABEL = "+";
+    final color HUE = STICKY_COLOR;
+
+    PlusButton(x_scale, y_scale, size_scale){
+        super(this.LABEL, x_scale, y_scale, size_scale, this.HUE);
+    }
+
+    public void execute(){
+        currentSticky = new Sticky('', mouseX, mouseY, 0.1);
+        interactables.add(currentSticky);
     }
 }
 
 
 class Sticky extends Interactable {
     public String content;
-    public float xScale, yScale, dimScale;
-    public color hue;
+    final color HUE = STICKY_COLOR;
+    private float sizeScale;
+    private float size;
+    private float drawSize;
+    public int index;
 
-    Sticky(String txt, float x_scale, float y_scale, float dim_scale){
+    public static int count;
+
+    Sticky(String txt, float x_scale, float y_scale, float size_scale){
+        super(x_scale, y_scale, size_scale, size_scale, this.HUE);
         this.content = txt;
-        this.xScale = x_scale;
-        this.yScale = y_scale;
-        this.dimScale = dim_scale;
-
-        this.hue = color(#FAFAD2);
+        this.sizeScale = size_scale;
+        this.index = Sticky.count++;
     }
 
-    void execute(){
+    private boolean isMousedOver(){
+        return this.xDrawPos < mouseX &&
+               mouseX < this.xDrawPos + this.xDrawSize &&
+               this.yDrawPos < mouseY &&
+               mouseY < this.yDrawPos + this.yDrawSize;
+    }
+
+    public void execute(){
         if(currentSticky == this){
             currentSticky = null;
             this.xScale = this.xPos/width;
@@ -120,35 +151,40 @@ class Sticky extends Interactable {
         }
     }
 
-    void update(){
+    private void update(){
         if(currentSticky == this){
-            this.xPos = mouseX - this.xSize/2;
-            this.yPos = mouseY - this.ySize/2;
-            this.xSize = this.ySize = width * dimScale;
+            this.xPos = mouseX;
+            this.yPos = mouseY;
         }else{
-            this.xPos = (width * this.xScale) - this.xSize/2;
-            this.yPos = (height * this.yScale) - this.ySize/2;
-            this.xSize = this.ySize = width * dimScale;
+            this.xPos = width * this.xScale;
+            this.yPos = height * this.yScale;
         }
-        this.paint();
+        this.size = this.xSize = this.ySize = width * sizeScale;
+        this.xDrawPos = this.xPos - this.xSize/2;
+        this.yDrawPos = this.yPos - this.ySize/2;
+        this.xDrawSize = this.yDrawSize = this.size;
     }
 
-    void paint(){
+    public void paint(){
+        // Update
+        this.update();
         // Draw shape
         noStroke();
         fill(this.hue);
-        rect(this.xPos, this.yPos, this.xSize, this.ySize);
+        rect(this.xDrawPos, this.yDrawPos, this.xDrawSize, this.yDrawSize);
 
         // Highlight if necessary
         if(this.isMousedOver()){
             stroke(#000000);
             noFill();
-            rect(this.xPos, this.yPos, this.xSize, this.ySize);
+            rect(this.xDrawPos, this.yDrawPos, this.xDrawSize, this.yDrawSize);
         }
 
         // Draw text
         noStroke();
         fill(#000000);
-        text(this.xPos - this.xSize/2, this.yPos - this.ySize/2, this.xSize, this.ySize)
+        textAlign(CENTER, CENTER);
+        textSize(17);
+        text(this.content, this.xDrawPos, this.yDrawPos, this.xDrawSize, this.yDrawSize);
     }
 }
