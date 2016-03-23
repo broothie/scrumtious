@@ -1,0 +1,28 @@
+{
+  "name": "scrumbr",
+  "version": "1.0.0",
+  "description": "Simple online scrumboard",
+  "main": "app.js",
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adbooth/scrumblr.git"
+  },
+  "keywords": [
+    "scrum",
+    "agile",
+    "scrumboard",
+    "scrumbr"
+  ],
+  "author": "Andrew D Booth",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/adbooth/scrumblr/issues"
+  },
+  "homepage": "https://github.com/adbooth/scrumblr#readme"
+}
