@@ -3,11 +3,18 @@
   "version": "1.0.0",
   "description": "Simple online scrumboard",
   "main": "app.js",
-  "dependencies": {},
+  "dependencies": {
+    "body-parser": "^1.15.0",
+    "cookie-parser": "^1.4.1",
+    "eureca.io": "^0.6.42",
+    "express": "^4.13.4",
+    "express-session": "^1.13.0",
+    "node-uuid": "^1.4.7"
+  },
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
