@@ -4,14 +4,14 @@ router = require('express').Router()
 
 # Index route
 router.get '/', (req, res) ->
-  res.redirect '/scrumbr'
+  res.redirect '/board'
 
 # Start routes
 router.get '/start', (req, res) ->
   res.render 'start'
 
 # Scrumblr route
-router.get '/scrumbr', (req, res) ->
+router.get '/board', (req, res) ->
   res.render 'scrumbr'
 
 # Export the router that was just made
