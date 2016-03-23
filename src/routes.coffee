@@ -12,7 +12,7 @@ router.get '/start', (req, res) ->
 
 # Scrumblr route
 router.get '/board', (req, res) ->
-  res.render 'scrumbr'
+  res.render 'scrumtious'
 
 # Export the router that was just made
 module.exports = router
