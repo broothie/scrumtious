@@ -6,3 +6,8 @@
 - [Processing.js](http://processingjs.org/)
 - [Express](http://expressjs.com/)
 - [MongoDB](https://www.mongodb.org/)
+
+## Contributions
+###### When Contributing:
+- Checkout a new branch and contact owner [Andy](https://andrewdbooth.me) if necessary.
+- Once you've made significant additions, make a pull request on dev.
