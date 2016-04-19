@@ -1,14 +1,13 @@
 {
-  "name": "scrumbr",
+  "name": "scrumtious",
   "version": "1.0.0",
-  "description": "Simple online scrumboard",
+  "description": "A simple online scrumboard.",
   "main": "app.js",
   "dependencies": {
     "body-parser": "^1.15.0",
     "cookie-parser": "^1.4.1",
     "crypto": "0.0.3",
     "engine.io": "^1.6.8",
-    "eureca.io": "^0.6.42",
     "express": "^4.13.4",
     "express-session": "^1.13.0",
     "jade": "^1.11.0",
@@ -24,18 +23,19 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/adbooth/scrumblr.git"
+    "url": "https://github.com/adbooth/scrumtious.git"
   },
   "keywords": [
     "scrum",
     "agile",
     "scrumboard",
-    "scrumbr"
+    "scrumtious",
+    "scrumptious"
   ],
   "author": "Andrew D Booth",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/adbooth/scrumblr/issues"
+    "url": "https://github.com/adbooth/scrumtious/issues"
   },
-  "homepage": "https://github.com/adbooth/scrumblr#readme"
+  "homepage": "https://github.com/adbooth/scrumtious#readme"
 }

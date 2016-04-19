@@ -13,30 +13,3 @@ io.on 'connection', (socket) ->
 
   socket.on 'disconnect', ->
     console.log 'connlost'
-
-
-
-
-
-# eurecaio = require 'eureca.io'
-#
-# # Make Eureca server
-# eurecaServer = new eurecaio.Server {
-#   allow: ['handshakeToServer']
-# }
-# # Attach to express server
-# eurecaServer.attach require('./app').server
-#
-# dbTable = {}
-#
-# # onConnect
-# eurecaServer.onConnect (connection) ->
-#   console.log "Connected with #{connection.id}"
-#   eurecaServer.getClient(connection.id).handshakeToClient 'offer'
-#
-# eurecaServer.exports.handshakeToServer = (payload) ->
-#   if payload.error?
-#     console.log 'URL error on client side'
-#
-#   console.log 'handshake back!'
-#   console.log payload

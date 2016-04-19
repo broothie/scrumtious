@@ -22,32 +22,3 @@ socket.on('initialize', function(payload){
     console.log(pi);
     console.log(payload);
 });
-
-// var eurecaServer;
-//
-// var eurecaClientSetup = function(){
-//     // Create instance of Eureca client
-//     var eurecaClient = new Eureca.Client();
-//     eurecaClient.ready(function(proxy){
-//         // Get server object
-//         eurecaServer = proxy;
-//     });
-//
-//     eurecaClient.exports.handshakeToClient = function(payload){
-        // console.log(payload);
-        // urlPathArray = document.location.pathname.split('/');
-        // if(payload == 'offer' && urlPathArray[urlPathArray.length-2] == 'boards'){
-        //     fingerprint = urlPathArray[urlPathArray.length-1];
-        //     eurecaServer.handshakeToServer({'fingerprint': fingerprint});
-        // }else{
-        //     // TODO: Improve this error handling
-        //     eurecaServer.handshakeToServer({'error': 'URL is wrong'});
-        // }
-//     };
-//
-//     eurecaClient.exports.updateState = function(payload){
-//
-//     };
-// };
-//
-// eurecaClientSetup();
