@@ -1,19 +1,20 @@
-### app.coffee ###
+# src/app.coffee becomes:
+### app.js ###
 # Node imports
 path = require 'path'
 # 3rd party imports
 express = require 'express'
+mongodb = require 'mongodb'
 
 
-# Make Express.js app
+# Create Express object
 app = exports.app = express()
 
-# Set up public folder and Jade view engine
+# Set up static dir and Jade
 app.use express.static path.join __dirname, 'public'
 app.set 'view engine', 'jade'
 
 # Set up session and cookies
-# TODO Use a more secure secret key for the session setup
 app.use require('express-session') {
   secret: require('node-uuid').v4()
   resave: true
@@ -26,15 +27,25 @@ app.use require('cookie-parser')()
 bodyparser = require 'body-parser'
 app.use bodyparser.json()
 app.use bodyparser.urlencoded {extended: true}
-# Set up routes
-app.use '/', require './routes'
 
+# Connect to database
+mongodb.MongoClient.connect process.env.MONGODB_URI or 'mongodb://localhost:27017/scrumtious', (err, database) ->
+  if err
+    console.log err
+    process.exit 1
 
-# Start server
-app.set 'port', process.env.PORT or 5000
-server = exports.server = app.listen app.get('port'), ->
-  host = server.address().address
-  port = app.get 'port'
-  console.log "Application server running at http://#{host}:#{port}"
+  exports.db = database
+  console.log 'Database connection ready'
 
-require './server'
+  # Set up routes
+  app.use '/', require './routes'
+
+  # Start server
+  app.set 'port', process.env.PORT or 5000
+  server = exports.server = app.listen app.get('port'), ->
+    host = server.address().address
+    port = app.get 'port'
+    console.log "Application server running at http://#{host}:#{port}"
+
+  # Set up socket
+  require './socket'

@@ -19,9 +19,9 @@ void setup(){
 
     // Set up backspace KeyTrap
     KeyTrap.trap(document.getElementById('stage'), [8], function(){
-        if(currentSticky != null){
-            currentSticky.content = currentSticky.content.substr(0, currentSticky.content.length - 1);
-        }
+       if(currentSticky != null){
+           currentSticky.content = currentSticky.content.substr(0, currentSticky.content.length - 1);
+       }
     });
 }
 

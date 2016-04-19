@@ -110,9 +110,23 @@ class PlusButton extends Button {
         super(this.LABEL, x_scale, y_scale, size_scale, this.HUE);
     }
 
+    // private void update(){
+    //     super();
+    //     if(currentSticky == null){
+    //         this.label = "+";
+    //     }else{
+    //         this.label = "-";
+    //     }
+    // }
+
     public void execute(){
-        currentSticky = new Sticky('', mouseX, mouseY, 0.1);
-        interactables.add(currentSticky);
+        if(currentSticky == null){
+            currentSticky = new Sticky('', mouseX, mouseY, 0.1);
+            interactables.add(currentSticky);
+        }else{
+            interactables.remove(currentSticky);
+            currentSticky = null;
+        }
     }
 }
 
