@@ -8,16 +8,21 @@ var socket = io.connect(myURL);
 
 socket.on('connect', function(){
     urlPathArray = document.location.pathname.split('/');
-    if(urlPathArray[urlPathArray.length-2] == 'board'){
-        fingerprint = urlPathArray[urlPathArray.length-1];
-        socket.emit('handshake', fingerprint);
-    }else{
-        // TODO: Improve this error handling
-        alert('URL is wrong');
-    }
+    fingerprint = urlPathArray[urlPathArray.length-1];
+    socket.emit('HANDSHAKE', fingerprint);
 });
 
-socket.on('initialize', function(payload){
-    var pi = Processing.getInstanceById('sketch');
-    document.title = payload.name + ' - Scrumtious Scrumboard';
+socket.on('INITIALIZE', function(payload){
+    // TODO: Switch to Angular.js because Processing is annoying
+    // var pi = Processing.getInstanceById('sketch');
+    document.title = payload.boardname + ' - Scrumtious Scrumboard';
+});
+
+// socket.on('CLIENT_UPDATE', function(payload){
+//     // TODO: socket.emit('SERVER_UPDATE', {})
+// });
+
+socket.on('disconnect', function(){
+    // TODO: Emit final state
+    // socket.emit('BOARD_CLOSE', fingerprint)
 });

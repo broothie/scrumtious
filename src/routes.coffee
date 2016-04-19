@@ -6,18 +6,15 @@ crypto = require 'crypto'
 
 # Module imports
 db = require('./app').db
+boards = db.collection 'boards'
 
-# Index route
+# Index routes
 router.get '/', (req, res) ->
-  # When linked to route, redirect to start page
-  res.redirect '/start'
-
-# Start routes
-router.get '/start', (req, res) ->
   res.render 'start'
-router.post '/start', (req, res) ->
+router.post '/', (req, res) ->
   # Get board name from user post
   boardname = req.body.boardname
+  cleanboardname = boardname.toLowerCase().replace(' ', '-').replace(/[^0-9a-z_-]/gi, '')
 
   # Create hash object and get date to hash with
   shasum = crypto.createHash 'sha1'
@@ -28,25 +25,25 @@ router.post '/start', (req, res) ->
   fingerprint = shasum.digest 'hex'
 
   # Add board to database
-  db.collection('boards').insert {
+  boards.insert {
     fingerprint: fingerprint
     data: JSON.stringify {
-      name: boardname
+      boardname: boardname
+      cleanboardname: cleanboardname
       stickylist: []
     }
   }
 
   # Redirect user to their new board
-  res.redirect "/board/#{fingerprint}"
+  res.redirect "/#{cleanboardname}/#{fingerprint}"
 
 # Board route
-router.get '/board', (req, res) ->
-  res.redirect '/start'
-router.get '/board/:fingerprint', (req, res) ->
-  res.render 'board'
-router.post '/board/:fingerprint', (req, res) ->
-  # body...
-
+router.get '/:cleanboardname/:fingerprint', (req, res) ->
+  boards.findOne {fingerprint: req.params.fingerprint}, (err, item) ->
+    if item? and JSON.parse(item.data).cleanboardname == req.params.cleanboardname
+      res.render 'board'
+    else
+      res.redirect '/'
 
 
 module.exports = router

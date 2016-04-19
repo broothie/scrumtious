@@ -1,5 +1,5 @@
-# src/server.coffee becomes:
-### server.js ###
+# src/socket.coffee becomes:
+### socket.js ###
 # 3rd party imports
 io = require('socket.io')(require('./app').server)
 
@@ -8,18 +8,19 @@ db = require('./app').db
 
 activeBoards = []
 
-io.on 'connection', (socket) ->
+io.on 'connect', (socket) ->
   boards = db.collection 'boards'
-  socket.on 'handshake', (fingerprint) ->
-    boards.findOne {'fingerprint': fingerprint}, (err, item) ->
-      socket.emit 'initialize', JSON.parse item.data
 
-  socket.on 'clientRequest', (fingerprint) ->
-    boards.findOne {'fingerprint': fingerprint}, (err, item) ->
-      socket.emit 'clientUpdate', JSON.parse item.data
+  socket.on 'HANDSHAKE', (fingerprint) ->
+    boards.findOne {fingerprint: fingerprint}, (err, item) ->
+      socket.emit 'INITIALIZE', JSON.parse item.data
 
-  socket.on 'serverUpdate', (payload) ->
-    boards.findOne
+  # socket.on 'CLIENT_REQUEST', (fingerprint) ->
+  #   boards.findOne {'fingerprint': fingerprint}, (err, item) ->
+  #     socket.emit 'CLIENT_UPDATE', JSON.parse item.data
+  #
+  # socket.on 'SERVER_UPDATE', (payload) ->
+  #   # boards.findOne
 
-  socket.on 'disconnect', ->
-    console.log 'connlost'
+  # socket.on 'disconnect', ->
+  #   console.log 'connlost'
