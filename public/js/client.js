@@ -19,6 +19,5 @@ socket.on('connect', function(){
 
 socket.on('initialize', function(payload){
     var pi = Processing.getInstanceById('sketch');
-    console.log(pi);
-    console.log(payload);
+    document.title = payload.name + ' - Scrumtious Scrumboard';
 });

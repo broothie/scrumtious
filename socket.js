@@ -14,7 +14,7 @@
       return db.collection('boards').findOne({
         'fingerprint': fingerprint
       }, function(err, item) {
-        return socket.emit('initialize', item.data);
+        return socket.emit('initialize', JSON.parse(item.data));
       });
     });
     return socket.on('disconnect', function() {
