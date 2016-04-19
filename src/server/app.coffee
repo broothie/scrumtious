@@ -1,5 +1,5 @@
-# src/app.coffee becomes:
-### app.js ###
+# src/server/app.coffee becomes:
+### src/app.js ###
 # Node imports
 path = require 'path'
 # 3rd party imports

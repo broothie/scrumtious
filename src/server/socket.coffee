@@ -1,5 +1,5 @@
-# src/socket.coffee becomes:
-### socket.js ###
+# src/server/socket.coffee becomes:
+### src/socket.js ###
 # 3rd party imports
 io = require('socket.io')(require('./app').server)
 
