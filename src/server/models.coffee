@@ -13,13 +13,19 @@ exports.Board = class Board
   constructor: (@fingerprint, @name, @cleanname) ->
 
   addSticky: (x, y) ->
-    @stickyList.push new Sticky @maxId++, x, y
+    sticky = new Sticky @maxId++, x, y
+    @stickyList.push sticky
+    return sticky
 
   removeSticky: (identifier) ->
-    if identifier instanceof Sticky
-      @stickyList.splice @stickyList.indexOf sticky, 1
-    else
+    # TODO: Understand why this is removing multiple stickies
+    if typeof identifier is 'number'
       @removeSticky @getSticky identifier
+    else
+      @stickyList.splice(@stickyList.indexOf(identifier, 1))
+
+  # removeStickyById: (id) ->
+  #   @removeSticky @getSticky id
 
   getSticky: (id) ->
-    (sticky for sticky in @stickyList when sticky.id == id)
+    (sticky for sticky in @stickyList when sticky.id == id)[0]
