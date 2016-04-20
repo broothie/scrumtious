@@ -18,14 +18,14 @@ exports.Board = class Board
     return sticky
 
   removeSticky: (identifier) ->
-    # TODO: Understand why this is removing multiple stickies
     if typeof identifier is 'number'
+      console.log @stickyList
       @removeSticky @getSticky identifier
+      console.log @stickyList
     else
-      @stickyList.splice(@stickyList.indexOf(identifier, 1))
-
-  # removeStickyById: (id) ->
-  #   @removeSticky @getSticky id
+      console.log @stickyList
+      @stickyList.splice @stickyList.indexOf(identifier), 1
+      console.log @stickyList
 
   getSticky: (id) ->
     (sticky for sticky in @stickyList when sticky.id == id)[0]

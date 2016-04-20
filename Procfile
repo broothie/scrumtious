@@ -1,1 +1,1 @@
-web: node src/start.js
+web: node start.js
