@@ -19,13 +19,9 @@ exports.Board = class Board
 
   removeSticky: (identifier) ->
     if typeof identifier is 'number'
-      console.log @stickyList
       @removeSticky @getSticky identifier
-      console.log @stickyList
     else
-      console.log @stickyList
       @stickyList.splice @stickyList.indexOf(identifier), 1
-      console.log @stickyList
 
   getSticky: (id) ->
     (sticky for sticky in @stickyList when sticky.id == id)[0]
