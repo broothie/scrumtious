@@ -1,1 +1,1 @@
-web: node start.js
+web: node -e "require('child_process').execSync('cake build'); require('./server');"

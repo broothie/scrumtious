@@ -1,10 +1,10 @@
 # src/server/socket.coffee becomes:
 ### src/socket.js ###
 # 3rd party imports
-io = require('socket.io')(require('./app').server)
+io = require('socket.io')(require('./server').server)
 
 # Module imports
-db = require('./app').db
+db = require('./server').db
 
 activeBoards = []
 

@@ -12,12 +12,12 @@ task 'clean', 'Cleans transpiled JS', ->
 
 # Server stuff
 task 'build:server', 'Builds server JS into root', ->
-  build = exec 'coffee -co ./src/ ./src/server/'
+  build = exec 'coffee -co ./ ./src/server/'
   build.stdout.on 'data', (data) -> console.log "build stdout: #{data}"
   build.stderr.on 'data', (data) -> console.log "build stderr: #{data}"
 
 task 'clean:server', 'Cleans server JS from root', ->
-  exec 'rm ./src/*.js'
+  exec 'rm ./*.js'
 
 
 # Client stuff

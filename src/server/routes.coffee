@@ -1,16 +1,16 @@
 # src/server/routes.coffee becomes:
 ### src/routes.js ###
 # 3rd party imports
-router = require('express').Router()
+module.exports = router = require('express').Router()
 crypto = require 'crypto'
 
 # Module imports
-db = require('./app').db
+db = require('./server').db
 boards = db.collection 'boards'
 
 # Index routes
 router.get '/', (req, res) ->
-  res.render 'start'
+  res.render 'board'
 router.post '/', (req, res) ->
   # Get board name from user post
   boardName = req.body.boardName
@@ -44,6 +44,3 @@ router.get '/:cleanBoardName/:fingerprint', (req, res) ->
       res.render 'board'
     else
       res.redirect '/'
-
-
-module.exports = router
