@@ -1,9 +1,8 @@
 # src/server/server.coffee becomes:
 ### src/server.js ###
-# Node imports
-path = require 'path'
-# 3rd party imports
+# Standard imports
 express = require 'express'
+path = require 'path'
 
 # Connect to database
 require('mongodb').MongoClient.connect process.env.MONGODB_URI or 'mongodb://localhost:27017/scrumtious', (err, database) ->
@@ -18,8 +17,8 @@ require('mongodb').MongoClient.connect process.env.MONGODB_URI or 'mongodb://loc
   app = express()
 
   # Set up static dir and Jade
-  app.use express.static path.join __dirname, 'public'
-  app.set 'view engine', 'jade'
+  app.use express.static path.join __dirname, 'public/css'
+  app.use express.static path.join __dirname, 'public/js'
 
   # Set up session and cookies
   app.use require('express-session') {
@@ -44,4 +43,4 @@ require('mongodb').MongoClient.connect process.env.MONGODB_URI or 'mongodb://loc
   console.log 'Server running'
 
   # Set up socket
-  require './socket'
+  require './comm'

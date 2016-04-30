@@ -1,63 +1,58 @@
 # src/client/app.coffee becomes:
 ### public/js/app.js ###
 
-app = angular.module 'scrumtious', []
+app = angular.module 'Scrumtious', []
 
-app.controller 'StickyButtonCtrl', ($scope) ->
+app.controller 'BoardCtrl', ['$scope', ($scope) ->
+  $scope.stickyList = []
+  $scope.stickyList.push {text: 'some sticky text'}
+
   $scope.addSticky = ->
-    alert 'Sticky added!'
+    console.log 'Sticky added!'
+]
 
-  $scope.mouseover = ->
-    console.log 'Moused over'
-
-
-app.controller 'BoardCtrl', ($scope) ->
-  $scope.columns = ['Todo', 'In Progress', 'Done']
-
-app.directive 'ss-column', ($scope) ->
+app.directive 'sticky', ($document) ->
   {
+    restrict: 'E'
+    scope: {
+      text: '@'
+    }
     template: '''
-      <td>
-
-      </td>
+    <div class='card blue-grey darken-1'>
+      <div class='card-content white-text'>
+        <p>{{text}}<p>
+      </div>
+    </div>
     '''
-  }
-
-
-
-app.directive 'sb-draggable', ->
-  {
-    restrict: 'A'
-    compile: (element, attrs) ->
-      # body...
-
-
-  }
-
-app.directive 'sb-sticky', ($document) ->
-  (scope, element, attr) ->
-    startX = startY = x = y = 0
-    element.on 'mousedown', (event) ->
-      event.preventDefault()
-      startX = event.screenX - x
-      startY = event.screenY - y
-      $document.on 'mousemove', mousemove
-      $document.on 'mouseup', mouseup
-
-    mousemove = (event) ->
-      x = event.screenX - startX
-      y = event.screenY - startY
+    link: (scope, element, attrs) ->
+      startX = startY = x = y = 0
       element.css {
-        left: x + 'px'
-        top: y + 'px'
+        'position': 'relative'
+        'display': 'block'
+        'width': '150px'
+        'height': '150px'
+        'cursor': 'pointer'
       }
 
-    mouseup = (event) ->
-      $document.off 'mousemove', mousemove
-      $document.off 'mouseup', mouseup
+      element.on 'dblclick', (event) ->
+        scope.stickyInfo.text = prompt 'Change the text', scope.stickyInfo.text
 
-    template = '''
-      <div sb-draggable>
-        <p>Sticky directive<p>
-      </div>
-    '''
+      element.on 'mousedown', (event) ->
+        event.preventDefault()
+        startX = event.screenX - x
+        startY = event.screenY - y
+        $document.on 'mousemove', mousemove
+        $document.on 'mouseup', mouseup
+
+      mousemove = (event) ->
+        y = event.screenY - startY
+        x = event.screenX - startX
+        element.css {
+          top: y + 'px'
+          left: x + 'px'
+        }
+
+      mouseup = (event) ->
+        $document.off 'mousemove', mousemove
+        $document.off 'mouseup', mouseup
+  }

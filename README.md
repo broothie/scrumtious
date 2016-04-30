@@ -3,7 +3,7 @@
 
 ###### Built with:
 - [NodeJS](https://nodejs.org/) && [CoffeeScript](http://coffeescript.org/)
-- [Processing.js](http://processingjs.org/)
+- [AngularJS](https://angularjs.org/)
 - [Express](http://expressjs.com/)
 - [MongoDB](https://www.mongodb.org/)
 

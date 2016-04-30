@@ -1,0 +1,13 @@
+.addButton {
+    position: fixed;
+    top: 90%;
+    left: 95%;
+}
+
+.sticky {
+    position: relative;
+    display: block;
+    width: 150px;
+    height: 150px;
+    cursor: pointer;
+}

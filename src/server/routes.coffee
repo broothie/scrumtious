@@ -1,16 +1,16 @@
 # src/server/routes.coffee becomes:
 ### src/routes.js ###
+# Standard imports
+path = require 'path'
+crypto = require 'crypto'
 # 3rd party imports
 module.exports = router = require('express').Router()
-crypto = require 'crypto'
-
 # Module imports
-db = require('./server').db
-boards = db.collection 'boards'
+boards = require('./server').db.collection 'boards'
 
 # Index routes
 router.get '/', (req, res) ->
-  res.render 'board'
+  res.sendFile path.join  __dirname, 'public/views/board.html'
 router.post '/', (req, res) ->
   # Get board name from user post
   boardName = req.body.boardName
@@ -41,6 +41,6 @@ router.post '/', (req, res) ->
 router.get '/:cleanBoardName/:fingerprint', (req, res) ->
   boards.findOne {fingerprint: req.params.fingerprint}, (err, item) ->
     if item? and JSON.parse(item.data).cleanBoardName == req.params.cleanBoardName
-      res.render 'board'
+      res.sendFile path.join __dirname, 'public/views/board.html'
     else
       res.redirect '/'
