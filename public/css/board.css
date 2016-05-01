@@ -1,13 +1,13 @@
 .addButton {
     position: fixed;
     top: 90%;
-    left: 95%;
+    left: 90%;
 }
 
-.sticky {
+/*.sticky {
     position: relative;
     display: block;
     width: 150px;
     height: 150px;
     cursor: pointer;
-}
+}*/

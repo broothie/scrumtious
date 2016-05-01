@@ -6,6 +6,7 @@ app = angular.module 'Scrumtious', []
 app.controller 'BoardCtrl', ['$scope', ($scope) ->
   $scope.stickyList = []
   $scope.stickyList.push {text: 'some sticky text'}
+  $scope.stickyTracker = 1
 
   $scope.addSticky = ->
     console.log 'Sticky added!'
@@ -15,17 +16,21 @@ app.directive 'sticky', ($document) ->
   {
     restrict: 'E'
     scope: {
+      idn: '@'
       text: '@'
+      startX: '=x'
+      startY: '=y'
+      x: '=x'
+      y: '=y'
     }
     template: '''
     <div class='card blue-grey darken-1'>
       <div class='card-content white-text'>
-        <p>{{text}}<p>
+        <p>{{text}}, {{x}}, {{y}}</p>
       </div>
     </div>
     '''
     link: (scope, element, attrs) ->
-      startX = startY = x = y = 0
       element.css {
         'position': 'relative'
         'display': 'block'
@@ -34,25 +39,29 @@ app.directive 'sticky', ($document) ->
         'cursor': 'pointer'
       }
 
-      element.on 'dblclick', (event) ->
-        scope.stickyInfo.text = prompt 'Change the text', scope.stickyInfo.text
+      element.on 'mouseon', (event) ->
+        console.log scope.text, scope.startX, scope.startY, scope.x, scope.y
 
       element.on 'mousedown', (event) ->
         event.preventDefault()
-        startX = event.screenX - x
-        startY = event.screenY - y
+        scope.startX = event.screenX - scope.x
+        scope.startY = event.screenY - scope.y
         $document.on 'mousemove', mousemove
         $document.on 'mouseup', mouseup
 
       mousemove = (event) ->
-        y = event.screenY - startY
-        x = event.screenX - startX
+        scope.y = event.screenY - scope.startY
+        scope.x = event.screenX - scope.startX
         element.css {
-          top: y + 'px'
-          left: x + 'px'
+          top: scope.y + 'px'
+          left: scope.x + 'px'
         }
 
       mouseup = (event) ->
         $document.off 'mousemove', mousemove
         $document.off 'mouseup', mouseup
+
+      element.on 'dblclick', (event) ->
+        # scope.text = prompt 'Change the text', scope.text
+        alert scope.x + ', ' + scope.startX
   }
