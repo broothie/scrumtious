@@ -1,6 +1,5 @@
 # src/server/server.coffee becomes:
 ### src/server.js ###
-# Standard imports
 express = require 'express'
 
 # Connect to database

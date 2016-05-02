@@ -18,3 +18,11 @@ body {
 .btn {
     color: MediumAquaMarine;
 }
+
+sticky {
+    position: relative;
+    display: block;
+    width: 150px;
+    height: 150px;
+    cursor: pointer;
+}

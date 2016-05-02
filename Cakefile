@@ -23,7 +23,7 @@ task 'clean:server', 'Cleans server JS from root', ->
 # Client stuff
 task 'build:client', 'Builds client JS into public/js/', ->
   try fs.mkdirSync './public/js/'
-  build = exec 'coffee -bco ./public/js ./src/client/'
+  build = exec 'coffee -bco ./public/js ./src/client/coffee/'
   build.stdout.on 'data', (data) -> console.log "build stdout: #{data}"
   build.stderr.on 'data', (data) -> console.log "build stderr: #{data}"
 
