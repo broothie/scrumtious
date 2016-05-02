@@ -10,7 +10,7 @@ boards = require('./server').db.collection 'boards'
 
 # Index routes
 router.get '/', (req, res) ->
-  res.sendFile path.join  __dirname, 'public/views/board.html'
+  res.sendFile path.join  __dirname, 'public/views/start.html'
 router.post '/', (req, res) ->
   # Get board name from user post
   boardName = req.body.boardName

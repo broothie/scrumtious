@@ -14,7 +14,7 @@
   boards = require('./server').db.collection('boards');
 
   router.get('/', function(req, res) {
-    return res.sendFile(path.join(__dirname, 'public/views/board.html'));
+    return res.sendFile(path.join(__dirname, 'public/views/start.html'));
   });
 
   router.post('/', function(req, res) {

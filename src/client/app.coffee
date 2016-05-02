@@ -3,65 +3,67 @@
 
 app = angular.module 'Scrumtious', []
 
+getGlobals = {}
+
 app.controller 'BoardCtrl', ['$scope', ($scope) ->
   $scope.stickyList = []
-  $scope.stickyList.push {text: 'some sticky text'}
-  $scope.stickyTracker = 1
+  $scope.stickyIdTracker = 0
+
+  getGlobals = ->
+    [$scope.stickyList, $scope.stickyIdTracker]
 
   $scope.addSticky = ->
-    console.log 'Sticky added!'
+    $scope.stickyList.push {
+      idn: $scope.stickyIdTracker++
+      x: 50
+      y: 50
+      text: prompt 'Give your sticky some content:'
+    }
 ]
 
 app.directive 'sticky', ($document) ->
   {
     restrict: 'E'
     scope: {
-      idn: '@'
-      text: '@'
-      startX: '=x'
-      startY: '=y'
-      x: '=x'
-      y: '=y'
+      info: '='
     }
     template: '''
-    <div class='card blue-grey darken-1'>
-      <div class='card-content white-text'>
-        <p>{{text}}, {{x}}, {{y}}</p>
-      </div>
+    <div class="card blue-grey darken-1">
+      <div class="card-content white-text">
+        <p>{{info.text}}</p>
     </div>
     '''
     link: (scope, element, attrs) ->
-      element.css {
-        'position': 'relative'
-        'display': 'block'
-        'width': '150px'
-        'height': '150px'
-        'cursor': 'pointer'
-      }
+      info = scope.info
+      startX = info.x
+      startY = info.y
 
-      element.on 'mouseon', (event) ->
-        console.log scope.text, scope.startX, scope.startY, scope.x, scope.y
+      element.css {
+        position: 'relative'
+        display: 'block'
+        width: '150px'
+        height: '150px'
+        cursor: 'pointer'
+        left: info.x + 'px'
+        top: info.y + 'px'
+      }
 
       element.on 'mousedown', (event) ->
         event.preventDefault()
-        scope.startX = event.screenX - scope.x
-        scope.startY = event.screenY - scope.y
+        startX = event.screenX - info.x
+        startY = event.screenY - info.y
         $document.on 'mousemove', mousemove
         $document.on 'mouseup', mouseup
 
       mousemove = (event) ->
-        scope.y = event.screenY - scope.startY
-        scope.x = event.screenX - scope.startX
+        info.y = event.screenY - startY
+        info.x = event.screenX - startX
         element.css {
-          top: scope.y + 'px'
-          left: scope.x + 'px'
+          top: info.y + 'px'
+          left: info.x + 'px'
         }
 
       mouseup = (event) ->
         $document.off 'mousemove', mousemove
         $document.off 'mouseup', mouseup
-
-      element.on 'dblclick', (event) ->
-        # scope.text = prompt 'Change the text', scope.text
-        alert scope.x + ', ' + scope.startX
   }

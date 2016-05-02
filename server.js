@@ -3,11 +3,9 @@
 /* src/server.js */
 
 (function() {
-  var express, path;
+  var express;
 
   express = require('express');
-
-  path = require('path');
 
   require('mongodb').MongoClient.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/scrumtious', function(err, database) {
     var app, bodyparser;
@@ -18,8 +16,7 @@
     exports.db = database;
     console.log('Database connection ready');
     app = express();
-    app.use(express["static"](path.join(__dirname, 'public/css')));
-    app.use(express["static"](path.join(__dirname, 'public/js')));
+    app.use(express["static"](require('path').join(__dirname, 'public')));
     app.use(require('express-session')({
       secret: require('node-uuid').v4(),
       resave: true,
@@ -35,7 +32,7 @@
     app.set('port', process.env.PORT || 5000);
     exports.server = app.listen(app.get('port'));
     console.log('Server running');
-    return require('./comm');
+    return require('./backsocket');
   });
 
 }).call(this);
