@@ -6,8 +6,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
+    <!-- JS -->
+    <script src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js" defer></script>
+    <script src="/lib/js.cookie.js" defer></script>
+    <script src="/js/start.js" defer></script>
+
     <!-- CSS-->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
     <link rel="stylesheet" href="/css/start.css">
 
     <!-- Page stuff-->
@@ -18,17 +24,20 @@
     <div class="container">
         <h2>Scrumtious Start</h2>
         <form method="post">
-            <div class="form-group">
+            <div class="input-field">
+                <input id="boardName" type="text" name="boardName">
                 <label for="boardName">Choose a name for your board</label>
-                <input id="boardName" type="text" name="boardName" class="form-control">
             </div>
-            <div class="form-group">
-                <button type="submit" class="btn btn-default">Submit</button>
+            <div>
+                <button type="submit" class="btn white">Submit</button>
             </div>
         </form>
     </div>
+    <div class="container">
+        <div class="input-field">
+            <h5>Previous Boards</h5>
+            <ul id="previous_boards"></ul>
+        </div>
+    </div>
 </body>
-<script>
-    document.getElementById('boardName').focus();
-</script>
 </html>

@@ -1,10 +1,11 @@
 # src/server/routes.coffee becomes:
-### src/routes.js ###
+### routes.js ###
 # Standard imports
 path = require 'path'
 crypto = require 'crypto'
 # 3rd party imports
 module.exports = router = require('express').Router()
+Cookies = require 'cookies'
 # Module imports
 boards = require('./server').db.collection 'boards'
 
@@ -14,6 +15,7 @@ router.get '/', (req, res) ->
 router.post '/', (req, res) ->
   # Get board name from user post
   boardName = req.body.boardName
+  return res.redirect '/' if boardName == ''
   cleanBoardName = boardName.toLowerCase().replace(' ', '-').replace(/[^0-9a-z_-]/gi, '')
 
   # Create hash object and get date to hash with
@@ -30,6 +32,16 @@ router.post '/', (req, res) ->
     boardName: boardName
     cleanBoardName: cleanBoardName
     stickyData: []
+  }
+
+  # Add cookie
+  cookies = new Cookies req, res
+  cookies.set fingerprint, JSON.stringify({
+    boardName: boardName
+    cleanBoardName: cleanBoardName
+  }), {
+    maxAge: 1000 * 60 * 60 * 24 * 365
+    httpOnly: false
   }
 
   # Redirect user to their new board

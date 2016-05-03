@@ -1,5 +1,5 @@
 html {
-    background-color: MediumAquaMarine;
+    /*background-color: MediumAquaMarine;*/
     position: relative;
     min-height: 100%;
 }
@@ -13,16 +13,19 @@ body {
 
 .container {
     max-width: 500px;
+    padding-bottom: 30px;
 }
 
+.input-field label {
+    color: white;
+}
+.input-field input[type=text]:focus + label {
+     color: white;
+}
+.input-field input[type=text]:focus {
+     border-bottom: 1px solid white;
+     box-shadow: 0 1px 0 0 white;
+}
 .btn {
     color: MediumAquaMarine;
-}
-
-sticky {
-    position: relative;
-    display: block;
-    width: 150px;
-    height: 150px;
-    cursor: pointer;
 }

@@ -1,5 +1,5 @@
-# src/client/frontsocket.coffee becomes:
-### public/js/frontsocket.js ###
+# src/client/socket.coffee becomes:
+### public/js/socket.js ###
 
 # Globals
 myUrl = "#{location.protocol}//#{document.domain}#{if location.port then ':' + location.port else ''}"

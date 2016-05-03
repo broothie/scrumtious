@@ -1,5 +1,5 @@
 # src/server/server.coffee becomes:
-### src/server.js ###
+### server.js ###
 express = require 'express'
 
 # Connect to database
@@ -17,12 +17,12 @@ require('mongodb').MongoClient.connect process.env.MONGODB_URI or 'mongodb://loc
   app.use express.static require('path').join __dirname, 'public'
 
   # Set up session and cookies
-  app.use require('express-session') {
-    secret: require('node-uuid').v4()
-    resave: true
-    saveUninitialized: true
-  }
-  app.use require('cookie-parser')()
+  # app.use require('express-session') {
+  #   secret: require('node-uuid').v4()
+  #   resave: true
+  #   saveUninitialized: true
+  # }
+  # app.use require('cookie-parser')()
 
   # Set up bodyparser for handling forms
   # TODO Use CSRF for secure form posting

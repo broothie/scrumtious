@@ -1,5 +1,5 @@
 # src/server/models.coffee becomes:
-### src/models.js ###
+### models.js ###
 
 
 class Sticky
