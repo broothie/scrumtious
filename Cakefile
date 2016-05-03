@@ -1,17 +1,31 @@
 require 'shortcake'
+fs = require 'fs'
 exec = require('child_process').exec
 
-task 'build', 'Builds coffee', ->
-  build = exec 'coffee -co ./ src/'
+# All stuff
+task 'build', 'Builds coffee', ['build:server', 'build:client'], ->
+  invoke.parallel ['build:server', 'build:client']
+
+task 'clean', 'Cleans transpiled JS', ->
+  invoke.parallel ['clean:server', 'clean:client']
+
+
+# Server stuff
+task 'build:server', 'Builds server JS into root', ->
+  build = exec 'coffee -co ./ ./src/server/'
   build.stdout.on 'data', (data) -> console.log "build stdout: #{data}"
   build.stderr.on 'data', (data) -> console.log "build stderr: #{data}"
 
-task 'start', 'Runs built code', ['build'], ->
-  start = exec 'foreman start'
-  start.stdout.on 'data', (data) -> console.log "start stdout: #{data}"
-  start.stderr.on 'data', (data) -> console.log "start stderr: #{data}"
+task 'clean:server', 'Cleans server JS from root', ->
+  exec 'rm ./*.js'
 
-task 'clean', 'Cleans previously transpiled JS', ->
-  clean = exec 'rm ./*.js'
-  clean.stdout.on 'data', (data) -> console.log "clean stdout: #{data}"
-  clean.stderr.on 'data', (data) -> console.log "clean stderr: #{data}"
+
+# Client stuff
+task 'build:client', 'Builds client JS into public/js/', ->
+  try fs.mkdirSync './public/js/'
+  build = exec 'coffee -bco ./public/js ./src/client/'
+  build.stdout.on 'data', (data) -> console.log "build stdout: #{data}"
+  build.stderr.on 'data', (data) -> console.log "build stderr: #{data}"
+
+task 'clean:client', 'Cleans client JS from public/js/', ->
+  exec 'rm -rf ./public/js/'
