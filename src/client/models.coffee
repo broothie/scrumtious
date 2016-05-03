@@ -1,53 +1,40 @@
-# src/client/app.coffee becomes:
-### public/js/app.js ###
-
-# Some globals
-body = $ document.body
-# stickyIdTracker = 0
-# stickyList = []
-
-# Called on document readiness
-$ ->
-  # Make add button DOM
-  button = $ '<a>', {
-    class: 'btn-floating btn-large waves-effect waves-light red'
-  }
-  .attr 'id', 'button'
-  .css {
-    position: 'fixed'
-    left: '90%'
-    top: '90%'
-  }
-  # Add it's event handler
-  .click ->
-    new Sticky 50, 50
-
-  # Fill out add button DOM
-  button.append($ '<i>', {
-    class: 'material-icons'
-  }
-  .text '+')
-
-  # Add button to page
-  body.append button
-
+# src/client/models.coffee becomes:
+### public/js/models.js ###
 
 # For keeping data on stickies
-class Sticky
-  @stickyIdTracker: 0
-  @stickyList: []
+class StickyManager
+  stickyList: []
 
-  constructor: (x, y, @content='') ->
-    @idn = Sticky.stickyIdTracker++
+  constructor: (stickyData=[]) ->
+    for sticky in stickyData
+      [x, y] = [sticky.xs * window.innerWidth, sticky.ys * window.innerHeight]
+      @stickyList.push new Sticky sticky.content, x, y
+
+  addSticky: ->
+    [x, y] = [button.position().left - 145, button.position().top - 145]
+    sticky = new Sticky '', x, y
+    @stickyList.push sticky
+    sticky.sticky.dblclick()
+
+  removeSticky: (sticky) ->
+    @stickyList.splice @stickyList.indexOf sticky.destroy(), 1
+
+  data: ->
+    sticky.data() for sticky in @stickyList
+
+
+class Sticky
+  constructor: (@content, x, y) ->
     @editMode = false
 
     # Sticky element
     @sticky = $ '<sticky>'
+    .draggable()
     .css {
       left: x + 'px'
       top: y + 'px'
+      position: 'fixed'
     }
-    .draggable()
     # Add top div
     .append(@stickyDiv = $ '<div>', {
       class: 'card yellow lighten-2'
@@ -76,22 +63,20 @@ class Sticky
     }
     new Medium {
       element: @textEntry.get 0
-      mode: Medium.paritalMode
+      mode: Medium.partialMode
       autofocus: true
     }
-
-    console.log @sticky.css('left'), @sticky.css('top')
 
     @sticky.dblclick (event) =>
       if @editMode
         # Switch out of edit mode
         # Style
         @sticky.draggable 'enable'
-        @stickyDiv.removeClass 'lighten-5'
+        @stickyDiv.removeClass 'lighten-4'
         @stickyDiv.addClass 'lighten-2'
 
         # Get content and remove text entry
-        @textEntry.remove()
+        @textEntry.detach()
         @content = @textEntry.text()
 
         # Add p
@@ -103,11 +88,11 @@ class Sticky
         # Style
         @sticky.draggable 'disable'
         @stickyDiv.removeClass 'lighten-2'
-        @stickyDiv.addClass 'lighten-5'
+        @stickyDiv.addClass 'lighten-4'
 
         # Get content and remove p
         @content = @textTag.text()
-        @textTag.remove()
+        @textTag.detach()
 
         # Add text entry
         @textEntry.text @content
@@ -115,5 +100,14 @@ class Sticky
         @textEntry.focus()
         @editMode = true
 
-    body.append @sticky
-    @sticky.dblclick()
+    $(document.body).append @sticky
+
+  data: ->
+    {
+      content: @content
+      xs: @sticky.position().left / window.innerWidth
+      ys: @sticky.position().top / window.innerHeight
+    }
+
+  destroy: ->
+    @sticky.remove()

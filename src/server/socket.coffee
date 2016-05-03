@@ -3,16 +3,16 @@
 # 3rd party imports
 io = require('socket.io')(require('./server').server)
 # Module imports
-db = require('./server').db
-
-activeBoards = []
+boards = require('./server').db.collection 'boards'
 
 io.on 'connect', (socket) ->
-  boards = db.collection 'boards'
-
   socket.on 'HANDSHAKE', (fingerprint) ->
     boards.findOne {fingerprint: fingerprint}, (err, item) ->
-      socket.emit 'INITIALIZE', JSON.parse item.data
+      socket.emit 'INITIALIZE', item
+
+  socket.on 'CLOSE', (payload) ->
+    boards.update {fingerprint: payload.fingerprint}, {$set: {stickyData: payload.stickyData}}
+
 
   # socket.on 'CLIENT_REQUEST', (fingerprint) ->
   #   boards.findOne {'fingerprint': fingerprint}, (err, item) ->

@@ -39,4 +39,4 @@ require('mongodb').MongoClient.connect process.env.MONGODB_URI or 'mongodb://loc
   console.log 'Server running'
 
   # Set up socket
-  require './backsocket'
+  require './socket'

@@ -27,11 +27,9 @@ router.post '/', (req, res) ->
   # Add board to database
   boards.insert {
     fingerprint: fingerprint
-    data: JSON.stringify {
-      boardName: boardName
-      cleanBoardName: cleanBoardName
-      stickylist: []
-    }
+    boardName: boardName
+    cleanBoardName: cleanBoardName
+    stickyData: []
   }
 
   # Redirect user to their new board
@@ -40,7 +38,7 @@ router.post '/', (req, res) ->
 # Board route
 router.get '/:cleanBoardName/:fingerprint', (req, res) ->
   boards.findOne {fingerprint: req.params.fingerprint}, (err, item) ->
-    if item? and JSON.parse(item.data).cleanBoardName == req.params.cleanBoardName
+    if item? and item.cleanBoardName == req.params.cleanBoardName
       res.sendFile path.join __dirname, 'public/views/board.html'
     else
       res.redirect '/'

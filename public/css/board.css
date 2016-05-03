@@ -1,11 +1,29 @@
-/*html, body {
-    height: 100%;
-    width: 100%;
-}*/
+/* css/board.css */
 
+/* Initial page stuff */
+html, body {
+    background-color: #e1f5fe;
+}
+html, body, table, th {
+    height: 100%;
+}
+
+table {
+    width: 100%;
+    border: 0px;
+}
+
+table th {
+    font-size: 20px;
+    text-align: center;
+    vertical-align: top;
+    border-right: 1px solid black;
+}
+
+/* Scrumboard stuff */
 sticky {
-    position: relative;
     display: block;
+    position: fixed;
     width: 150px;
     height: 150px;
     cursor: pointer;
