@@ -16,6 +16,6 @@
 1. Implement sticky deletion
 2. Fix space initialization on stickies
 3. Option to choose columns
-<!-- 4. Cookies -->
+4. ~~Cookies~~
 4. Implement deletable cookies
 5. Make it real time?
