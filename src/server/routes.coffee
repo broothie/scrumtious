@@ -6,6 +6,8 @@ crypto = require 'crypto'
 # 3rd party imports
 module.exports = router = require('express').Router()
 Cookies = require 'cookies'
+validator = require 'validator'
+# postmark = require('postmark')(process.env.POSTMARK_API_TOKEN)
 # Module imports
 boards = require('./server').db.collection 'boards'
 
@@ -13,10 +15,11 @@ boards = require('./server').db.collection 'boards'
 router.get '/', (req, res) ->
   res.sendFile path.join  __dirname, 'public/views/start.html'
 router.post '/', (req, res) ->
+  console.log req.body
   # Get board name from user post
-  boardName = req.body.boardName
-  return res.redirect '/' if boardName == ''
-  cleanBoardName = boardName.toLowerCase().replace(' ', '-').replace(/[^0-9a-z_-]/gi, '')
+  boardName = req.body.boardName.replace(/[^-0-9a-z_ ]/gi, '')
+  cleanBoardName = boardName.toLowerCase().replace(' ', '-')
+  console.log cleanBoardName
 
   # Create hash object and get date to hash with
   shasum = crypto.createHash 'sha1'
@@ -25,6 +28,9 @@ router.post '/', (req, res) ->
   # Hash with board name and date
   shasum.update boardName + date
   fingerprint = shasum.digest 'hex'
+
+  # if validator.isEmail req.body.email
+  #   # Use postmark
 
   # Add board to database
   boards.insert {
@@ -54,3 +60,6 @@ router.get '/:cleanBoardName/:fingerprint', (req, res) ->
       res.sendFile path.join __dirname, 'public/views/board.html'
     else
       res.redirect '/'
+
+# router.post '/:cleanBoardName/:fingerprint'
+#   postmark.send

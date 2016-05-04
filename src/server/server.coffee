@@ -16,14 +16,6 @@ require('mongodb').MongoClient.connect process.env.MONGODB_URI or 'mongodb://loc
   # Set up static dir
   app.use express.static require('path').join __dirname, 'public'
 
-  # Set up session and cookies
-  # app.use require('express-session') {
-  #   secret: require('node-uuid').v4()
-  #   resave: true
-  #   saveUninitialized: true
-  # }
-  # app.use require('cookie-parser')()
-
   # Set up bodyparser for handling forms
   # TODO Use CSRF for secure form posting
   bodyparser = require 'body-parser'
@@ -38,5 +30,5 @@ require('mongodb').MongoClient.connect process.env.MONGODB_URI or 'mongodb://loc
   exports.server = app.listen app.get('port')
   console.log 'Server running'
 
-  # Set up socket
+  # Set up comm
   require './socket'

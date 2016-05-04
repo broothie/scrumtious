@@ -2,33 +2,24 @@
 ### public/js/board.js ###
 
 # Globals
-button = stickyManager = null
+stickyManager = null
 
 initialize = (stickyData) ->
   stickyManager = new StickyManager stickyData
 
-  # Make add button DOM
-  button = $ '<a>', {
-    class: 'btn-floating btn-large waves-effect waves-light red'
-  }
-  .css {
-    position: 'fixed'
-    left: '90%'
-    top: '90%'
-  }
-  # Add it's event handler
-  .click ->
-    stickyManager.addSticky()
+sendLink = ->
+  subject = "Scrumtio.us scrumboard for our project"
+  body = "Check it out: #{window.location.href}"
+  window.open "mailto:?subject=#{subject}&body=#{body}"
 
-  # Fill out add button DOM
-  button.append($ '<i>', {
-    class: 'material-icons'
-  }
-  .text '+')
+$ ->
+  setTimeout ->
+    $('#link_button').attr 'data-clipboard-text', window.location.href
+    clipboard = new Clipboard '#link_button'
+    clipboard.on 'success', (event) ->
+      Materialize.toast('Link copied!', 1500)
 
-  # Add button to page
-  $(document.body).append button
-
-# Trap backspaces to prevent back-navigation
-$('html').trap [8], ->
-$('html').focus()
+    # Trap backspaces to prevent back-navigation
+    $('html').trap [8], ->
+    $('html').focus()
+  , 100
