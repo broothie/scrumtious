@@ -13,7 +13,6 @@ io.on 'connect', (socket) ->
   socket.on 'CLOSE', (payload) ->
     boards.update {fingerprint: payload.fingerprint}, {$set: {stickyData: payload.stickyData}}
 
-
   # socket.on 'CLIENT_REQUEST', (fingerprint) ->
   #   boards.findOne {'fingerprint': fingerprint}, (err, item) ->
   #     socket.emit 'CLIENT_UPDATE', JSON.parse item.data

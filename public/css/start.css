@@ -1,5 +1,4 @@
 html {
-    /*background-color: MediumAquaMarine;*/
     position: relative;
     min-height: 100%;
 }
@@ -26,6 +25,17 @@ body {
      border-bottom: 1px solid white;
      box-shadow: 0 1px 0 0 white;
 }
+.input-field input[type=email]:focus + label {
+     color: white;
+}
+.input-field input[type=email]:focus {
+     border-bottom: 1px solid white;
+     box-shadow: 0 1px 0 0 white;
+}
 .btn {
     color: MediumAquaMarine;
+}
+
+.chip {
+    margin-right: 3px;
 }

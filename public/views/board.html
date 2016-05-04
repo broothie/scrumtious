@@ -9,6 +9,8 @@
     <!-- JS -->
     <script src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous" defer></script>
     <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js" integrity="sha256-xNjb53/rY+WmG+4L6tTl9m6PpqknWZvRt0rO1SRnJzw=" crossorigin="anonymous" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.10/clipboard.min.js"></script>
     <script src="/lib/medium.js" defer></script>
     <script src="/lib/keytrap.js" defer></script>
     <script src="/socket.io/socket.io.js" defer></script>
@@ -17,9 +19,9 @@
     <script src="/js/models.js" defer></script>
 
     <!-- CSS-->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
-    <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="/css/board.css">
 
     <!-- Page stuff-->
@@ -34,5 +36,26 @@
             <th>Done</th>
         </tr>
     </table>
+    <div id="add_button" class="fixed-action-btn">
+        <a class="btn-floating btn-large blue tooltipped" data-position="right" data-delay="50" data-tooltip="Create Sticky" onclick="stickyManager.newSticky()">
+            <i class="large material-icons">create</i>
+        </a>
+    </div>
+    <div id="menu_button" class="fixed-action-btn">
+        <a href="/" class="btn-floating btn-large red" target="_blank">
+            <i class="large material-icons">menu</i>
+        </a>
+        <ul>
+          <li id="link_button">
+              <a class="btn-floating red tooltipped" data-position="left" data-delay="50" data-tooltip="Get Link"><i class="material-icons">link</i></a>
+          </li>
+          <li>
+              <a class="btn-floating green tooltipped" onclick="sendLink()" data-position="left" data-delay="50" data-tooltip="Email"><i class="material-icons">email</i></a>
+          </li>
+          <li>
+              <a class="btn-floating blue tooltipped" onclick="stickyManager.newSticky()" data-position="left" data-delay="50" data-tooltip="Create"><i class="material-icons">create</i></a>
+          </li>
+        </ul>
+    </div>
 </body>
 </html>

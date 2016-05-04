@@ -2,7 +2,7 @@
 
 /* Initial page stuff */
 html, body {
-    background-color: #e1f5fe;
+    background-color: Snow;
 }
 html, body, table, th {
     height: 100%;
@@ -11,23 +11,45 @@ html, body, table, th {
 table {
     width: 100%;
     border: 0px;
+    color: MediumAquaMarine;
 }
 
 table th {
-    font-size: 20px;
+    font-size: 30px;
     text-align: center;
-    vertical-align: top;
-    border-right: 1px solid black;
+    vertical-align: middle;
+    border-right: 1px solid MediumAquaMarine;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none;   /* Chrome/Safari/Opera */
+    -khtml-user-select: none;    /* Konqueror */
+    -moz-user-select: none;      /* Firefox */
+    -ms-user-select: none;       /* Internet Explorer/Edge */
+    user-select: none;
 }
 
 /* Scrumboard stuff */
+#menu_button {
+    right: 5%;
+    bottom: 5%;
+}
+#add_button {
+    right: 90%;
+    bottom: 5%;
+}
+
 sticky {
     display: block;
     position: fixed;
     width: 150px;
-    height: 150px;
     cursor: pointer;
     font-family: 'Roboto Condensed', sans-serif;
+    color: white;
+}
+.card {
+    background-color: MediumAquaMarine;
+}
+.card:hover {
+    box-shadow: 0px 5px 10px grey;
 }
 
 div:focus {

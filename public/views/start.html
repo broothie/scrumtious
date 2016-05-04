@@ -9,13 +9,12 @@
     <!-- JS -->
     <script src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js" defer></script>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet">
     <script src="/lib/js.cookie.js" defer></script>
     <script src="/js/start.js" defer></script>
 
     <!-- CSS-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="/css/start.css">
 
     <!-- Page stuff-->
@@ -27,18 +26,22 @@
         <h2>Scrumtious Start</h2>
         <form method="post">
             <div class="input-field">
-                <input id="boardName" type="text" name="boardName">
+                <input id="boardName" type="text" name="boardName" required>
                 <label for="boardName">Choose a name for your board</label>
             </div>
+            <!-- <div class="input-field">
+                <input type="email" id="email" class="validate" required>
+                <label for="email">Provide an email address</label>
+            </div> -->
             <div>
                 <button type="submit" class="btn white">Submit</button>
             </div>
         </form>
     </div>
     <div class="container">
-        <div class="input-field">
+        <div class="section">
             <h5>Previous Boards</h5>
-            <ul id="previous_boards"></ul>
+            <div id="previous_boards"></div>
         </div>
     </div>
 </body>
