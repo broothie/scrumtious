@@ -15,11 +15,9 @@ boards = require('./server').db.collection 'boards'
 router.get '/', (req, res) ->
   res.sendFile path.join  __dirname, 'public/views/start.html'
 router.post '/', (req, res) ->
-  console.log req.body
   # Get board name from user post
   boardName = req.body.boardName.replace(/[^-0-9a-z_ ]/gi, '')
   cleanBoardName = boardName.toLowerCase().replace(' ', '-')
-  console.log cleanBoardName
 
   # Create hash object and get date to hash with
   shasum = crypto.createHash 'sha1'
