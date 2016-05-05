@@ -55,6 +55,16 @@ router.post '/', (req, res) ->
 router.get '/:cleanBoardName/:fingerprint', (req, res) ->
   boards.findOne {fingerprint: req.params.fingerprint}, (err, item) ->
     if item? and item.cleanBoardName == req.params.cleanBoardName
+      # Add cookie
+      cookies = new Cookies req, res
+      cookies.set item.fingerprint, JSON.stringify({
+        boardName: item.boardName
+        cleanBoardName: item.cleanBoardName
+      }), {
+        maxAge: 1000 * 60 * 60 * 24 * 365
+        httpOnly: false
+      }
+
       res.sendFile path.join __dirname, 'public/views/board.html'
     else
       res.redirect '/'
