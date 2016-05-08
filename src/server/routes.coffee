@@ -38,15 +38,15 @@ router.post '/', (req, res) ->
     stickyData: []
   }
 
-  # Add cookie
-  cookies = new Cookies req, res
-  cookies.set fingerprint, JSON.stringify({
-    boardName: boardName
-    cleanBoardName: cleanBoardName
-  }), {
-    maxAge: 1000 * 60 * 60 * 24 * 365
-    httpOnly: false
-  }
+  # # Add cookie
+  # cookies = new Cookies req, res
+  # cookies.set fingerprint, JSON.stringify({
+  #   boardName: boardName
+  #   cleanBoardName: cleanBoardName
+  # }), {
+  #   maxAge: 1000 * 60 * 60 * 24 * 365
+  #   httpOnly: false
+  # }
 
   # Redirect user to their new board
   res.redirect "/#{cleanBoardName}/#{fingerprint}"
