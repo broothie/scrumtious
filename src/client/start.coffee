@@ -1,7 +1,10 @@
 # src/client/start.coffee becomes:
 ### public/js/start.js ###
 
+String::startsWith ?= (s) -> @[...s.length] is s
+
 for fingerprint, names of Cookies.get()
+  continue if fingerprint.startsWith '_ga'
   names = JSON.parse names
 
   tag = $ '<div>', {
