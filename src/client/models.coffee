@@ -35,10 +35,11 @@ class Sticky
     }
     # Add top div
     .append($ '<div>', {
-      class: 'card'
+      class: 'card hoverable'
     }
     .css {
       display: 'block'
+      'background-color': 'MediumAquaMarine'
     }
     # Add interactive div
     .append($ '<div>'
