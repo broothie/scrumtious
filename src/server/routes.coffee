@@ -6,18 +6,17 @@ crypto = require 'crypto'
 # 3rd party imports
 module.exports = router = require('express').Router()
 Cookies = require 'cookies'
-validator = require 'validator'
-# postmark = require('postmark')(process.env.POSTMARK_API_TOKEN)
 # Module imports
 boards = require('./server').db.collection 'boards'
+records = require('./server').records
 
 # Index routes
 router.get '/', (req, res) ->
   res.sendFile path.join  __dirname, 'public/views/start.html'
 router.post '/', (req, res) ->
   # Get board name from user post
-  boardName = req.body.boardName.replace(/[^-0-9a-z_ ]/gi, '')
-  cleanBoardName = boardName.toLowerCase().replace(' ', '-')
+  boardName = req.body.boardName.replace /[^-0-9a-z_ ]/gi, ''
+  cleanBoardName = boardName.toLowerCase().replace ' ', '-'
 
   # Create hash object and get date to hash with
   shasum = crypto.createHash 'sha1'
@@ -25,39 +24,27 @@ router.post '/', (req, res) ->
 
   # Hash with board name and date
   shasum.update boardName + date
-  fingerprint = shasum.digest 'hex'
-
-  # if validator.isEmail req.body.email
-  #   # Use postmark
+  boardId = shasum.digest 'hex'
 
   # Add board to database
   boards.insert {
-    fingerprint: fingerprint
+    boardId: boardId
     boardName: boardName
     cleanBoardName: cleanBoardName
+    maxNid: 0
     stickyData: []
-  }
-
-  # # Add cookie
-  # cookies = new Cookies req, res
-  # cookies.set fingerprint, JSON.stringify({
-  #   boardName: boardName
-  #   cleanBoardName: cleanBoardName
-  # }), {
-  #   maxAge: 1000 * 60 * 60 * 24 * 365
-  #   httpOnly: false
-  # }
-
-  # Redirect user to their new board
-  res.redirect "/#{cleanBoardName}/#{fingerprint}"
+  }, ->
+    # Redirect user to their new board
+    res.redirect "/#{cleanBoardName}/#{boardId}"
 
 # Board route
-router.get '/:cleanBoardName/:fingerprint', (req, res) ->
-  boards.findOne {fingerprint: req.params.fingerprint}, (err, item) ->
+router.get '/:cleanBoardName/:boardId', (req, res) ->
+  boardId = req.params.boardId
+  boards.findOne {boardId: boardId}, (err, item) ->
     if item? and item.cleanBoardName == req.params.cleanBoardName
       # Add cookie
       cookies = new Cookies req, res
-      cookies.set item.fingerprint, JSON.stringify({
+      cookies.set item.boardId, JSON.stringify({
         boardName: item.boardName
         cleanBoardName: item.cleanBoardName
       }), {
@@ -65,9 +52,10 @@ router.get '/:cleanBoardName/:fingerprint', (req, res) ->
         httpOnly: false
       }
 
+      records.recordExists(boardId).then (exists) ->
+        if exists
+          
+
       res.sendFile path.join __dirname, 'public/views/board.html'
     else
       res.redirect '/'
-
-# router.post '/:cleanBoardName/:fingerprint'
-#   postmark.send

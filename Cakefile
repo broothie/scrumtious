@@ -17,7 +17,7 @@ task 'build:server', 'Builds server JS into root', ->
   build.stderr.on 'data', (data) -> console.log "build stderr: #{data}"
 
 task 'clean:server', 'Cleans server JS from root', ->
-  exec 'rm ./*.js'
+  exec 'rm ./*.js & rm -rf models'
 
 
 # Client stuff

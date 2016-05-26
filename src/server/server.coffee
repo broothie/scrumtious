@@ -3,13 +3,16 @@
 express = require 'express'
 
 # Connect to database
-require('mongodb').MongoClient.connect process.env.MONGODB_URI or 'mongodb://localhost:27017/scrumtious', (err, database) ->
+require('mongodb').MongoClient.connect process.env.MONGODB_URI, (err, db) ->
   if err
     console.log err
     process.exit 1
-
-  exports.db = database
+  exports.db = db
   console.log 'Database connection ready'
+
+  # Connect to redis
+  exports.redis = require('redis').createClient process.env.REDISCLOUD_URL
+  exports.records = require './models/RecordManager'
 
   # Create Express object
   app = express()
@@ -17,7 +20,6 @@ require('mongodb').MongoClient.connect process.env.MONGODB_URI or 'mongodb://loc
   app.use express.static require('path').join __dirname, 'public'
 
   # Set up bodyparser for handling forms
-  # TODO Use CSRF for secure form posting
   bodyparser = require 'body-parser'
   app.use bodyparser.json()
   app.use bodyparser.urlencoded {extended: true}
@@ -26,9 +28,9 @@ require('mongodb').MongoClient.connect process.env.MONGODB_URI or 'mongodb://loc
   app.use '/', require './routes'
 
   # Start server
-  app.set 'port', process.env.PORT or 5000
-  exports.server = app.listen app.get('port')
+  app.set 'port', process.env.PORT
+  exports.server = server = app.listen app.get 'port'
   console.log 'Server running'
 
-  # Set up comm
-  require './socket'
+  # Set up socket.io
+  exports.socketio = require('socket.io')(server)

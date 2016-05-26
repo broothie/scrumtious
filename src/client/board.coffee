@@ -1,18 +1,17 @@
 # src/client/board.coffee becomes:
 ### public/js/board.js ###
 
-# Globals
+# Declare globals
+server = null
 stickyManager = null
 
-initialize = (stickyData) ->
-  stickyManager = new StickyManager stickyData
-
-sendLink = ->
-  subject = "Scrumtio.us scrumboard for our project"
-  body = "Check it out: #{window.location.href}"
-  window.open "mailto:?subject=#{subject}&body=#{body}"
-
+# Runs when page is done loading
 $ ->
+  # Define globals
+  server = new Server()
+  stickyManager = new StickyManager {}
+
+  # Wait and add clipboard copying functionality
   setTimeout ->
     $('#link_button').attr 'data-clipboard-text', window.location.href
     clipboard = new Clipboard '#link_button'
@@ -23,3 +22,9 @@ $ ->
     $('html').trap [8], ->
     $('html').focus()
   , 100
+
+# Send link functionality
+sendLink = ->
+  subject = "Scrumtio.us scrumboard for our project"
+  body = "Check it out: #{window.location.href}"
+  window.open "mailto:?subject=#{subject}&body=#{body}"

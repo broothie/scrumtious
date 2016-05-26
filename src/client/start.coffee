@@ -3,15 +3,15 @@
 
 String::startsWith ?= (s) -> @[...s.length] is s
 
-for fingerprint, names of Cookies.get()
-  continue if fingerprint.startsWith '_ga'
+for boardId, names of Cookies.get()
+  continue if boardId.startsWith '_ga'
   names = JSON.parse names
 
   tag = $ '<div>', {
     class: 'chip white'
   }
   .append($ '<a>', {
-    href: "/#{names.cleanBoardName}/#{fingerprint}"
+    href: "/#{names.cleanBoardName}/#{boardId}"
   }
   .css {
     color: 'MediumAquaMarine'
@@ -19,7 +19,7 @@ for fingerprint, names of Cookies.get()
   .text names.boardName)
   .append($ '<i>', {
     class: 'material-icons'
-    onclick: "Cookies.remove('#{fingerprint}');"
+    onclick: "Cookies.remove('#{boardId}');"
   }
   .css {
     color: 'MediumAquaMarine'

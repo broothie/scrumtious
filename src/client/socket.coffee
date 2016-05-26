@@ -1,22 +1,24 @@
 # src/client/socket.coffee becomes:
 ### public/js/socket.js ###
 
-# Globals
-myUrl = "#{location.protocol}//#{document.domain}#{if location.port then ':' + location.port else ''}"
-socket = io.connect myUrl
-fingerprint = null
 
-socket.on 'connect', ->
-  [..., fingerprint] = document.location.pathname.split '/'
-  socket.emit 'HANDSHAKE', fingerprint
+class Server
+  boardId: null
+  constructor: ->
+    [..., @boardId] = document.location.pathname.split '/'
+    myUrl = "#{location.protocol}//#{document.domain}#{if location.port then ':' + location.port else ''}"
+    @socket = io.connect myUrl
 
-socket.on 'INITIALIZE', (payload) ->
-  initialize payload.stickyData
-  document.title = "#{payload.boardName} - Scrumtious Scrumboard"
+    @socket.on 'connect', ->
+      @socket.emit 'HANDSHAKE', boardId
 
-window.onbeforeunload = ->
-  socket.emit 'CLOSE', {
-    fingerprint: fingerprint
-    stickyData: stickyManager.data()
-  }
-  console.log 'Closed'
+    @socket.on 'INITIALIZE', (payload) ->
+      initialize payload.stickyData
+      document.title = "#{payload.boardName} - Scrumtious Scrumboard"
+
+    window.onbeforeunload = ->
+      @socket.emit 'CLOSE', {
+        boardId: boardId
+        stickyData: stickyManager.data()
+      }
+      console.log 'Closed'
