@@ -2,15 +2,12 @@
 ### models/BoardRecord.js ###
 
 
-module.exports =
 class BoardRecord
   ### Schema:
     activeBoards
       "activeBoards" represents a list containing the active boards
     board
-      "<boardId>" represents a dict containing the following:
-        - boardId: board id
-        - maxNid: board's max note id
+      "<boardId>:maxNid" represents a board's max note id
       "<boardId>:notes" represents a list containing nids
       "<boardId>:clients" represents a list of active client hashes
 
@@ -24,40 +21,55 @@ class BoardRecord
         - content: note's text content
   ###
 
-  constructor: (@mem=require('../server').redis, @boardId, maxNid, notes) ->
-    @mem.set "#{@boardId}:maxNid", maxNid
+  constructor: (@mem=require('../server').redis) ->
 
+  populateBoard: (boardId, maxNid, notes) ->
+    @mem.set "#{boardId}:maxNid", maxNid
+
+    @mem.del "#{boardId}:notes"
     for note in notes
-      @mem.sadd "#{@boardId}:notes", note.nid
-      @mem.hmset "#{@boardId}:#{note.nid}", note
+      @mem.sadd "#{boardId}:notes", nid
+      @mem.del "#{boardId}:#{nid}"
 
-  newSticky: (xr, yr) ->
-    @mem.get "#{@boardId}:maxNid", (err, res) ->
+  addRecord: (boardId) ->
+    @mem.sadd 'activeBoards', boardId
+
+  removeRecord: (boardId) ->
+    @mem.srem 'activeBoards', boardId
+
+  recordExists: (boardId) ->
+    @mem.sismemberAsync 'activeBoards', boardId
+
+  newNote: (boardId, xr, yr) ->
+    @mem.get "#{boardId}:maxNid", (err, res) ->
       nid = parseInt res
-      @mem.sadd "#{@boardId}:notes", nid
-      @mem.hmset "#{@boardId}:#{nid}", {
+      @mem.sadd "#{boardId}:notes", nid
+      @mem.hmset "#{boardId}:#{nid}", {
         nid: nid
         xr: xr
         yr: yr
         content: ''
       }
-      @mem.incr "#{@boardId}:maxNid"
+      @mem.incr "#{boardId}:maxNid"
 
-  changeSticky: (nid, content) ->
-    @mem.hset "#{@boardId}:#{nid}", 'content', content
+  changeNote: (boardId, nid, content) ->
+    @mem.hset "#{boardId}:#{nid}", 'content', content
 
-  moveSticky: (nid, xr ,yr) ->
-    @mem.hmset "#{@boardId}:#{nid}", {
+  moveNote: (boardId, nid, xr ,yr) ->
+    @mem.hmset "#{boardId}:#{nid}", {
       xr: xr
       yr: yr
     }
 
-  deleteSticky: (nid) ->
-    @mem.srem "#{@boardId}:notes", nid
-    @mem.hdel "#{@boardId}:#{nid}"
+  deleteNote: (boardId, nid) ->
+    @mem.srem "#{boardId}:notes", nid
+    @mem.del "#{boardId}:#{nid}"
 
-  getSticky: (nid) ->
-    @mem.hgetallAsync "#{@boardId}:#{nid}"
+  getNote: (boardId, nid) ->
+    @mem.hgetallAsync "#{boardId}:#{nid}"
 
-  getNotes: ->
-    @mem.smembersAsync "#{@boardId}:notes"
+  getNotes: (boardId) ->
+    @mem.smembersAsync "#{boardId}:notes"
+
+
+module.exports = new BoardRecord
