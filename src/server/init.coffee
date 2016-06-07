@@ -1,5 +1,5 @@
-# src/server/server.coffee becomes:
-### server.js ###
+# src/init/init.coffee becomes:
+### init.js ###
 express = require 'express'
 
 # Connect to database
@@ -9,10 +9,6 @@ require('mongodb').MongoClient.connect process.env.MONGODB_URI, (err, db) ->
     process.exit 1
   exports.db = db
   console.log 'Database connection ready'
-
-  # Connect to redis
-  exports.redis = require('redis').createClient process.env.REDISCLOUD_URL
-  exports.records = require './models/RecordManager'
 
   # Create Express object
   app = express()

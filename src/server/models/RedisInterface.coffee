@@ -2,7 +2,7 @@
 ### models/BoardRecord.js ###
 
 
-class BoardRecord
+class RedisInterface
   ### Schema:
     activeBoards
       "activeBoards" represents a list containing the active boards
@@ -21,7 +21,11 @@ class BoardRecord
         - content: note's text content
   ###
 
-  constructor: (@mem=require('../server').redis) ->
+  constructor: ->
+    redis = require 'redis'
+    bluebird = require 'bluebird'
+    bluebird.promisifyAll(redis.RedisClient.prototype)
+    @mem = redis.createClient process.env.REDISCLOUD_URL
 
   populateBoard: (boardId, maxNid, notes) ->
     @mem.set "#{boardId}:maxNid", maxNid

@@ -7,8 +7,8 @@ crypto = require 'crypto'
 module.exports = router = require('express').Router()
 Cookies = require 'cookies'
 # Module imports
-boards = require('./server').db.collection 'boards'
-records = require('./server').records
+boards = require('./init').db.collection 'boards'
+records = require('./init').records
 
 # Index routes
 router.get '/', (req, res) ->
@@ -18,12 +18,9 @@ router.post '/', (req, res) ->
   boardName = req.body.boardName.replace /[^-0-9a-z_ ]/gi, ''
   cleanBoardName = boardName.toLowerCase().replace ' ', '-'
 
-  # Create hash object and get date to hash with
-  shasum = crypto.createHash 'sha1'
-  date = new Date()
-
   # Hash with board name and date
-  shasum.update boardName + date
+  shasum = crypto.createHash 'sha1'
+  shasum.update boardName + new Date()
   boardId = shasum.digest 'hex'
 
   # Add board to database
@@ -52,9 +49,9 @@ router.get '/:cleanBoardName/:boardId', (req, res) ->
         httpOnly: false
       }
 
-      records.recordExists(boardId).then (exists) ->
-        if exists
-          
+    #   records.recordExists(boardId).then (exists) ->
+    #     if exists
+
 
       res.sendFile path.join __dirname, 'public/views/board.html'
     else

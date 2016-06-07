@@ -1,9 +1,9 @@
 # src/server/socket.coffee becomes:
 ### socket.js ###
 # 3rd party imports
-io = require('socket.io')(require('./server').server)
+io = require('socket.io')(require('./init').server)
 # Module imports
-db = require('./server').db
+db = require('./init').db
 boards = db.collection 'boards'
 
 # On new socket connection, define handlers
