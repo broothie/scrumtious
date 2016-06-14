@@ -37,7 +37,7 @@ table th {
     bottom: 5%;
 }
 
-sticky {
+note {
     display: block;
     position: fixed;
     width: 150px;
@@ -45,13 +45,6 @@ sticky {
     font-family: 'Roboto Condensed', sans-serif;
     color: white;
 }
-.card {
-    background-color: MediumAquaMarine;
-}
-.card:hover {
-    box-shadow: 0px 5px 10px grey;
-}
-
 div:focus {
     outline: none;
 }
