@@ -5,8 +5,8 @@ class NoteManager
   notes: {}
 
   constructor: (@agent, noteDatas) ->
-    for noteData in noteDatas
-      @addNote new Note @agent, noteData.content, noteData.xr, noteData.yr
+    for nid, noteData of noteDatas
+      @newNote noteData
 
   addNote: (note) ->
     @notes[note.nid] = note
@@ -23,8 +23,9 @@ class NoteManager
   getNote: (nid) ->
     @notes[nid]
 
-  removeNote: (note) ->
-    @notes.splice @notes.indexOf note.destroy(), 1
+  deleteNote: (nid) ->
+    @getNote(nid).destroy()
+    delete @notes.nid
 
   data: ->
     note for nid, note of @notes

@@ -22,7 +22,7 @@ def index():
             'boardName': boardName,
             'singleTokenBoardName': singleTokenBoardName,
             'maxNid': 0,
-            'notes': []
+            'notes': {}
         })
 
         # Redirect user to their new board

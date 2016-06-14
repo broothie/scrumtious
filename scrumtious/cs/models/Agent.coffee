@@ -34,9 +34,14 @@ class Agent
     @socket.on 'tc_NEW_NOTE', (payload) ->
       noteManager.newNote payload
 
+    @socket.on 'tc_CHANGE_NOTE', (payload) ->
+      noteManager.changeNote payload.nid, payload.content
+
     @socket.on 'tc_MOVE_NOTE', (payload) ->
-      console.log "Move #{payload.nid}"
       noteManager.moveNote payload.nid, payload.xr, payload.yr
+
+    @socket.on 'tc_DELETE_NOTE', (nid) ->
+      noteManager.deleteNote nid
 
 
 

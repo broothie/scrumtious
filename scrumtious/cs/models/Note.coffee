@@ -32,7 +32,7 @@ class Note
     }
     .text 'close'
     .click =>
-      @agent.removeNote
+      @agent.deleteNote @nid
     ))
     # Add content div
     .append($ '<div>', {
@@ -42,15 +42,22 @@ class Note
       'padding-top': '0px'
     }
     # Add text entry
-    .append(@textEntry = $ '<div>'
+    .append(textEntry = $ '<div>'
     .css {
       height: '100%'
+      cursor: 'text'
     }
     .text content)))
-    new Medium {
-      element: @textEntry.get 0
-      mode: Medium.partialMode
-      autofocus: true
+    textEntry.focusout =>
+      noteData = @data()
+      @agent.changeNote noteData.nid, noteData.content
+
+    @medium = new Medium {
+      element: textEntry.get 0
+      mode: Medium.inlineMode
+      keyContext: {
+        'enter': -> textEntry.focusout()
+      }
     }
 
     @domNote.draggable({
@@ -65,6 +72,7 @@ class Note
 
     $(document.body).append @domNote
 
+  # Methods
   move: (xr, yr) ->
     @domNote.css {
       left: xr * window.innerWidth + 'px'
@@ -72,16 +80,16 @@ class Note
     }
 
   change: (content) ->
-    @textEntry.text(content)
+    @medium.value(content)
 
   data: ->
     {
       nid: @nid
-      content: @textEntry.text().replace(/[^-0-9a-z_ ]/gi, '')
+      content: @medium.value().replace(/[^-0-9a-z_ ]/gi, '')
       xr: @domNote.position().left / window.innerWidth
       yr: @domNote.position().top / window.innerHeight
     }
 
   destroy: ->
-    alert @textEntry.text()
+    @medium.destroy()
     @domNote.remove()

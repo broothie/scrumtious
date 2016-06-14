@@ -14,10 +14,6 @@ $ ->
     clipboard = new Clipboard '#link_button'
     clipboard.on 'success', (event) ->
       Materialize.toast('Link copied!', 1500)
-
-    # Trap backspaces to prevent back-navigation
-    $('html').trap [8], ->
-    $('html').focus()
   , 100
 
 # Send link functionality

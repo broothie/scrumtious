@@ -28,11 +28,24 @@ def newNote(payload):
     # Send new note signal to board users
     emit('tc_NEW_NOTE', mem.getNote(boardId, nid), room=boardId)
 
+@socketio.on('ts_CHANGE_NOTE')
+def changeNote(payload):
+    # Update data fields in memory
+    boardId = payload['boardId']
+    nid = payload['nid']
+    mem.changeNote(boardId, nid, payload['content'])
+    # Send new data
+    noteData = mem.getNote(boardId, nid)
+    emit('tc_CHANGE_NOTE', {
+        'nid': nid,
+        'content': noteData['content']
+    }, room=boardId, include_self=False)
+
 @socketio.on('ts_MOVE_NOTE')
 def moveNote(payload):
     # Update data fields in memory
     boardId = payload['boardId']
-    nid = int(payload['nid'])
+    nid = payload['nid']
     mem.moveNote(boardId, nid, payload['xr'], payload['yr'])
     # Send new data
     noteData = mem.getNote(boardId, nid)
@@ -41,6 +54,15 @@ def moveNote(payload):
         'xr': noteData['xr'],
         'yr': noteData['yr']
     }, room=boardId, include_self=False)
+
+@socketio.on('ts_DELETE_NOTE')
+def deleteNote(payload):
+    # Update data fields in memory
+    boardId = payload['boardId']
+    nid = payload['nid']
+    mem.deleteNote(boardId, nid)
+    # Send new data
+    emit('tc_DELETE_NOTE', nid, room=boardId)
 
 @socketio.on('ts_CLOSE')
 def close(boardId):

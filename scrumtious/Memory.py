@@ -15,9 +15,9 @@ class Memory:
         pipe.set('%s:maxNid' % boardId, board['maxNid'])
 
         pipe.delete('%s:notes' % boardId)
-        for note in board['notes']:
-            pipe.sadd('%s:notes' % boardId, note['nid'])
-            pipe.hmset('%s:%d' % (boardId, note['nid']), note)
+        for nid, note in board['notes'].iteritems():
+            pipe.sadd('%s:notes' % boardId, nid)
+            pipe.hmset('%s:%d' % (boardId, int(nid)), note)
 
         pipe.execute()
 
@@ -58,7 +58,7 @@ class Memory:
         pipe = redis.pipeline()
 
         pipe.sadd('%s:notes' % boardId, ogMaxNid)
-        pipe.hmset('%s:%d' % (boardId, ogMaxNid), {
+        pipe.hmset('%s:%d' % (boardId, int(ogMaxNid)), {
             'nid': ogMaxNid,
             'xr': xr,
             'yr': yr,
@@ -70,19 +70,19 @@ class Memory:
         return ogMaxNid
 
     def changeNote(self, boardId, nid, content):
-        redis.hset('%s:%d' % (boardId, nid), 'content', content)
+        redis.hset('%s:%d' % (boardId, int(nid)), 'content', content)
 
     def moveNote(self, boardId, nid, xr, yr):
-        redis.hmset('%s:%d' % (boardId, nid), {
+        redis.hmset('%s:%d' % (boardId, int(nid)), {
             'xr': xr,
             'yr': yr
         })
 
     def deleteNote(self, boardId, nid):
-        redis.pipeline().srem('%s:notes' % boardId, nid).delete('%s:%d' % (boardId, nid)).execute()
+        redis.pipeline().srem('%s:notes' % boardId, nid).delete('%s:%d' % (boardId, int(nid))).execute()
 
     def getNote(self, boardId, nid):
-        return redis.hgetall('%s:%d' % (boardId, nid))
+        return redis.hgetall('%s:%d' % (boardId, int(nid)))
 
     def getNotes(self, boardId):
-        return list(redis.smembers('%s:notes' % boardId))
+        return dict((nid, self.getNote(boardId, nid)) for nid in list(redis.smembers('%s:notes' % boardId)))
