@@ -5,10 +5,10 @@ from flask_pymongo import PyMongo
 from flask_redis import FlaskRedis
 from flask_socketio import SocketIO
 
-from helpers import csCompile
-
-# Compile client files
-csCompile('scrumtious/cs', 'scrumtious/static/js')
+# from helpers import csCompile
+#
+# # Compile client files
+# csCompile('scrumtious/cs', 'scrumtious/static/js')
 
 # Set up app
 app = Flask(__name__)
