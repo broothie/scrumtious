@@ -37,7 +37,7 @@ table th {
     bottom: 5%;
 }
 
-sticky {
+note {
     display: block;
     position: fixed;
     width: 150px;

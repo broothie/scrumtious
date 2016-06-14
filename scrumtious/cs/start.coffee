@@ -11,7 +11,7 @@ for boardId, names of Cookies.get()
     class: 'chip white'
   }
   .append($ '<a>', {
-    href: "/#{names.cleanBoardName}/#{boardId}"
+    href: "/#{names.singleTokenBoardName}/#{boardId}"
   }
   .css {
     color: 'MediumAquaMarine'

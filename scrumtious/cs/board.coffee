@@ -1,15 +1,12 @@
 # src/client/board.coffee becomes:
 ### public/js/board.js ###
 
-# Declare globals
-server = null
-stickyManager = null
+# Globals for DOM
+agent = null
+noteManager = null
 
-# Runs when page is done loading
 $ ->
-  # Define globals
-  server = new Server()
-  stickyManager = new StickyManager {}
+  agent = new Agent()
 
   # Wait and add clipboard copying functionality
   setTimeout ->

@@ -1,1 +1,1 @@
-web: node -e "require('child_process').execSync('cake build'); require('./init');"
+web: gunicorn -k gevent -w 1 scrumtious:app
