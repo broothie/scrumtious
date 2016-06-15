@@ -1,7 +1,6 @@
 argh==0.26.2
 astroid==1.4.6
 click==6.6
-CoffeeScript==1.1.2
 colorama==0.3.7
 Flask==0.11.1
 Flask-PyMongo==0.4.1
