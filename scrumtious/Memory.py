@@ -64,7 +64,7 @@ class Memory:
             'yr': yr,
             'content': ''
         })
-        pipe.incr('%s:maxNid')
+        pipe.incr('%s:maxNid' % boardId)
 
         pipe.execute()
         return ogMaxNid
