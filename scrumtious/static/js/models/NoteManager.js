@@ -10,16 +10,17 @@ NoteManager = (function() {
     this.agent = agent;
     for (nid in noteDatas) {
       noteData = noteDatas[nid];
-      this.newNote(noteData);
+      console.log(noteData);
+      this.addNote(noteData);
     }
   }
 
-  NoteManager.prototype.addNote = function(note) {
-    return this.notes[note.nid] = note;
+  NoteManager.prototype.addNote = function(noteData) {
+    return this.notes[noteData.nid] = new Note(this.agent, noteData.nid, noteData.content, noteData.xr, noteData.yr);
   };
 
   NoteManager.prototype.newNote = function(noteData) {
-    return this.addNote(new Note(this.agent, noteData.nid, noteData.content, noteData.xr, noteData.yr));
+    return this.addNote(noteData).textEntry.focus();
   };
 
   NoteManager.prototype.moveNote = function(nid, xr, yr) {

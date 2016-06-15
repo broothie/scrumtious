@@ -6,13 +6,14 @@ class NoteManager
 
   constructor: (@agent, noteDatas) ->
     for nid, noteData of noteDatas
-      @newNote noteData
+      console.log noteData
+      @addNote noteData
 
-  addNote: (note) ->
-    @notes[note.nid] = note
+  addNote: (noteData) ->
+    @notes[noteData.nid] = new Note @agent, noteData.nid, noteData.content, noteData.xr, noteData.yr
 
   newNote: (noteData) ->
-    @addNote new Note @agent, noteData.nid, noteData.content, noteData.xr, noteData.yr
+    @addNote(noteData).textEntry.focus()
 
   moveNote: (nid, xr, yr) ->
     @getNote(nid).move xr, yr
