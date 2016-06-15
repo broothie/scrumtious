@@ -42,21 +42,23 @@ class Note
       'padding-top': '0px'
     }
     # Add text entry
-    .append(textEntry = $ '<div>'
+    .append(@textEntry = $ '<div>'
     .css {
       height: '100%'
       cursor: 'text'
     }
     .text content)))
-    textEntry.focusout =>
+    @textEntry.focusout =>
       noteData = @data()
       @agent.changeNote noteData.nid, noteData.content
+      document.activeElement.blur()
 
     @medium = new Medium {
-      element: textEntry.get 0
+      element: @textEntry.get 0
       mode: Medium.inlineMode
       keyContext: {
-        'enter': -> textEntry.focusout()
+        'enter': => @textEntry.focusout()
+        'shift+enter': -> alert 'shiftentered'
       }
     }
 
@@ -80,12 +82,12 @@ class Note
     }
 
   change: (content) ->
-    @medium.value(content)
+    @textEntry.text(content)
 
   data: ->
     {
       nid: @nid
-      content: @medium.value().replace(/[^-0-9a-z_ ]/gi, '')
+      content: @textEntry.text().replace(/[^-0-9a-z_ ]/gi, '')
       xr: @domNote.position().left / window.innerWidth
       yr: @domNote.position().top / window.innerHeight
     }

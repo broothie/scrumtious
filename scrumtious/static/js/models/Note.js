@@ -4,7 +4,7 @@ var Note;
 
 Note = (function() {
   function Note(agent, nid, content, xr, yr) {
-    var handle, textEntry;
+    var handle;
     this.agent = agent;
     this.nid = nid;
     this.domNote = $('<note>').css({
@@ -29,23 +29,29 @@ Note = (function() {
       "class": 'card-content white-text'
     }).css({
       'padding-top': '0px'
-    }).append(textEntry = $('<div>').css({
+    }).append(this.textEntry = $('<div>').css({
       height: '100%',
       cursor: 'text'
     }).text(content))));
-    textEntry.focusout((function(_this) {
+    this.textEntry.focusout((function(_this) {
       return function() {
         var noteData;
         noteData = _this.data();
-        return _this.agent.changeNote(noteData.nid, noteData.content);
+        _this.agent.changeNote(noteData.nid, noteData.content);
+        return document.activeElement.blur();
       };
     })(this));
     this.medium = new Medium({
-      element: textEntry.get(0),
+      element: this.textEntry.get(0),
       mode: Medium.inlineMode,
       keyContext: {
-        'enter': function() {
-          return textEntry.focusout();
+        'enter': (function(_this) {
+          return function() {
+            return _this.textEntry.focusout();
+          };
+        })(this),
+        'shift+enter': function() {
+          return alert('shiftentered');
         }
       }
     });
@@ -72,13 +78,13 @@ Note = (function() {
   };
 
   Note.prototype.change = function(content) {
-    return this.medium.value(content);
+    return this.textEntry.text(content);
   };
 
   Note.prototype.data = function() {
     return {
       nid: this.nid,
-      content: this.medium.value().replace(/[^-0-9a-z_ ]/gi, ''),
+      content: this.textEntry.text().replace(/[^-0-9a-z_ ]/gi, ''),
       xr: this.domNote.position().left / window.innerWidth,
       yr: this.domNote.position().top / window.innerHeight
     };
