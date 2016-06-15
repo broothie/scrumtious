@@ -4,3 +4,4 @@ venv
 shorts.bash
 dump.rdb
 .env
+server.*
