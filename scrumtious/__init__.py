@@ -15,9 +15,13 @@ from flask_socketio import SocketIO
 # Set up app
 app = Flask(__name__)
 app.debug = True
+
 app.config['MONGO_URI'] = environ['MONGODB_URI']
 mongo = PyMongo(app)
+
+app.config['REDIS_URL'] = environ['REDISCLOUD_URL']
 redis = FlaskRedis(app)
+
 socketio = SocketIO(app)
 
 # Set up routes, socket
