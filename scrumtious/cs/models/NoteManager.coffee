@@ -6,8 +6,7 @@ class NoteManager
 
   constructor: (@agent, noteDatas) ->
     for nid, noteData of noteDatas
-      console.log noteData
-      @addNote noteData
+      @addNote noteData if nid not of @notes
 
   addNote: (noteData) ->
     @notes[noteData.nid] = new Note @agent, noteData.nid, noteData.content, noteData.xr, noteData.yr

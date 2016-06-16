@@ -28,13 +28,16 @@ table th {
 }
 
 /* Scrumboard stuff */
-#menu_button {
-    right: 5%;
-    bottom: 5%;
-}
 #add_button {
     right: 90%;
     bottom: 5%;
+}
+
+nav {
+  position: fixed;
+}
+.nav-wrapper {
+  background-color: MediumAquaMarine;
 }
 
 note {
