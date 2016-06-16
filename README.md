@@ -49,7 +49,7 @@ $ pip install -r requirements.txt
 
 As for configuration, the application is hosted on [Heroku](https://www.heroku.com/home), so use of the [Heroku toolbelt](https://toolbelt.heroku.com/)'s `heroku local` along with a `.env` file best simulates the production environment.
 
-# When Contributing:
+# When Contributing
 - Contact [Andy](https://andrewdbooth.me) for information on where to help
 - Checkout and make pull requests to `dev`
 - *[`TODO`](http://scrumtio.us/Scrumtious/db5f1e5b6be063a498a80e1cea8cb6e7fe2137af)*
