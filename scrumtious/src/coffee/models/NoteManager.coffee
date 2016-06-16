@@ -3,13 +3,14 @@
 
 class NoteManager
   notes: {}
+  maxZ: 1
 
   constructor: (@agent, noteDatas) ->
     for nid, noteData of noteDatas
       @addNote noteData if nid not of @notes
 
   addNote: (noteData) ->
-    @notes[noteData.nid] = new Note @agent, noteData.nid, noteData.content, noteData.xr, noteData.yr
+    @notes[noteData.nid] = new Note @agent, this, noteData.nid, noteData.content, noteData.xr, noteData.yr
 
   newNote: (noteData) ->
     @addNote(noteData).textEntry.focus()

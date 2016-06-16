@@ -3,7 +3,7 @@
 
 
 class Note
-  constructor: (@agent, @nid, content, xr, yr) ->
+  constructor: (@agent, @noteManager, @nid, content, xr, yr) ->
     # Sticky element
     @domNote = $ '<note>'
     .css {
@@ -11,12 +11,8 @@ class Note
       top: yr * window.innerHeight + 'px'
     }
     # Add top div
-    .append($ '<div>', {
+    .append(card = $ '<div>', {
       class: 'card hoverable'
-    }
-    .css {
-      display: 'block'
-      'background-color': 'MediumAquaMarine'
     }
     # Add interactive div
     .append($ '<div>'
@@ -43,11 +39,15 @@ class Note
     }
     # Add text entry
     .append(@textEntry = $ '<div>'
-    .css {
-      height: '100%'
-      cursor: 'text'
-    }
     .text content)))
+
+    # Add some functionality
+    @domNote.mouseenter =>
+      @noteManager.maxZ++
+      @domNote.css {
+        'z-index': @noteManager.maxZ
+      }
+
     @textEntry.focusout =>
       noteData = @data()
       @agent.changeNote noteData.nid, noteData.content
@@ -58,7 +58,6 @@ class Note
       mode: Medium.inlineMode
       keyContext: {
         'enter': => @textEntry.focusout()
-        'shift+enter': -> alert 'shiftentered'
       }
     }
 

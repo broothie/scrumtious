@@ -1,0 +1,40 @@
+@import _common
+
+html
+  position: relative
+  min-height: 100%
+
+body
+  color: $primary-color
+  background-color: $highlight-color
+  padding-top: 200px
+  margin-bottom: 50px
+
+.container
+  max-width: 500px
+  padding-bottom: 30px
+
+.input-field
+  label
+    color: $primary-color
+
+  input[type=text]:focus + label
+    color: $primary-color
+
+  input[type=text]:focus
+    border-bottom: 1px solid $primary-color
+    box-shadow: 0 1px 0 0 $primary-color
+
+  input[type=email]:focus + label
+    color: $primary-color
+
+  input[type=email]:focus
+    border-bottom: 1px solid $primary-color
+    box-shadow: 0 1px 0 0 $primary-color
+
+.btn
+  color: $highlight-color
+
+.chip
+  margin-right: 3px
+  margin-bottom: 5px

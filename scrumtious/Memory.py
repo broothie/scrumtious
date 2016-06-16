@@ -57,7 +57,12 @@ class Memory:
 
     def boardIsActive(self, boardId):
         activeUserCount = redis.get('%s:activeUserCount' % boardId)
-        return activeUserCount != None and int(activeUserCount) != 0
+        if activeUserCount is None: return False
+        activeUserCount = int(activeUserCount)
+        if activeUserCount < 0:
+            redis.set('%s:activeUserCount' % boardId, 0)
+            activeUserCount = 0
+        return bool(activeUserCount)
 
 
     def getMaxNid(self, boardId):
@@ -96,7 +101,7 @@ class Memory:
         return redis.hgetall('%s:%d' % (boardId, int(nid)))
 
     def getNotes(self, boardId):
-        return dict((nid, self.getNote(boardId, nid)) for nid in self.getNids(boardId))
+        return dict((str(nid), self.getNote(boardId, nid)) for nid in self.getNids(boardId))
 
     def getNids(self, boardId):
         return [int(nid) for nid in redis.smembers('%s:nids' % boardId)]
