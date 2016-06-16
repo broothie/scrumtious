@@ -36,10 +36,22 @@ table
 .card
   display: block
   background-color: $highlight-color
+  color: $primary-color
+
+.card:hover
+  z-index: 5
 
 .card-content div
   height: 100%
   cursor: text
+
+note
+  display: block
+  position: fixed
+  width: 150px
+  cursor: pointer
+  font-family: 'Roboto Condensed', sans-serif
+  color: $primary-color
 
 div:focus
   outline: none

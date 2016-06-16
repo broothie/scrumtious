@@ -32,11 +32,23 @@ table {
 
 .card {
   display: block;
-  background-color: MediumAquaMarine; }
+  background-color: MediumAquaMarine;
+  color: Snow; }
+
+.card:hover {
+  z-index: 5; }
 
 .card-content div {
   height: 100%;
   cursor: text; }
+
+note {
+  display: block;
+  position: fixed;
+  width: 150px;
+  cursor: pointer;
+  font-family: "Roboto Condensed", sans-serif;
+  color: Snow; }
 
 div:focus {
   outline: none; }
