@@ -4,18 +4,16 @@
 var Note;
 
 Note = (function() {
-  function Note(agent, nid, content, xr, yr) {
-    var handle;
+  function Note(agent, noteManager, nid, content, xr, yr) {
+    var card, handle;
     this.agent = agent;
+    this.noteManager = noteManager;
     this.nid = nid;
     this.domNote = $('<note>').css({
       left: xr * window.innerWidth + 'px',
       top: yr * window.innerHeight + 'px'
-    }).append($('<div>', {
+    }).append(card = $('<div>', {
       "class": 'card hoverable'
-    }).css({
-      display: 'block',
-      'background-color': 'MediumAquaMarine'
     }).append($('<div>').append(handle = $('<i>', {
       "class": 'material-icons'
     }).text('reorder')).append($('<i>', {
@@ -30,10 +28,15 @@ Note = (function() {
       "class": 'card-content white-text'
     }).css({
       'padding-top': '0px'
-    }).append(this.textEntry = $('<div>').css({
-      height: '100%',
-      cursor: 'text'
-    }).text(content))));
+    }).append(this.textEntry = $('<div>').text(content))));
+    this.domNote.mouseenter((function(_this) {
+      return function() {
+        _this.noteManager.maxZ++;
+        return _this.domNote.css({
+          'z-index': _this.noteManager.maxZ
+        });
+      };
+    })(this));
     this.textEntry.focusout((function(_this) {
       return function() {
         var noteData;
@@ -50,10 +53,7 @@ Note = (function() {
           return function() {
             return _this.textEntry.focusout();
           };
-        })(this),
-        'shift+enter': function() {
-          return alert('shiftentered');
-        }
+        })(this)
       }
     });
     this.domNote.draggable({

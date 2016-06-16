@@ -6,6 +6,8 @@ var NoteManager;
 NoteManager = (function() {
   NoteManager.prototype.notes = {};
 
+  NoteManager.prototype.maxZ = 1;
+
   function NoteManager(agent, noteDatas) {
     var nid, noteData;
     this.agent = agent;
@@ -18,7 +20,7 @@ NoteManager = (function() {
   }
 
   NoteManager.prototype.addNote = function(noteData) {
-    return this.notes[noteData.nid] = new Note(this.agent, noteData.nid, noteData.content, noteData.xr, noteData.yr);
+    return this.notes[noteData.nid] = new Note(this.agent, this, noteData.nid, noteData.content, noteData.xr, noteData.yr);
   };
 
   NoteManager.prototype.newNote = function(noteData) {
