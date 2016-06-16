@@ -6,7 +6,8 @@ body {
   color: Snow;
   background-color: MediumAquaMarine;
   padding-top: 200px;
-  margin-bottom: 50px; }
+  margin-bottom: 50px;
+  font-family: "Roboto Condensed", sans-serif; }
 
 .container {
   max-width: 500px;
