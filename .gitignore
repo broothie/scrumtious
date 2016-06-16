@@ -5,3 +5,5 @@ shorts.bash
 dump.rdb
 .env
 server.*
+.sass-cache
+*.css.map

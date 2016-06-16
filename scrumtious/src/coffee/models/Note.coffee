@@ -14,10 +14,6 @@ class Note
     .append($ '<div>', {
       class: 'card hoverable'
     }
-    .css {
-      display: 'block'
-      'background-color': 'MediumAquaMarine'
-    }
     # Add interactive div
     .append($ '<div>'
     .append(handle = $ '<i>', {
@@ -43,10 +39,6 @@ class Note
     }
     # Add text entry
     .append(@textEntry = $ '<div>'
-    .css {
-      height: '100%'
-      cursor: 'text'
-    }
     .text content)))
     @textEntry.focusout =>
       noteData = @data()
@@ -58,7 +50,6 @@ class Note
       mode: Medium.inlineMode
       keyContext: {
         'enter': => @textEntry.focusout()
-        'shift+enter': -> alert 'shiftentered'
       }
     }
 

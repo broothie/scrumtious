@@ -13,9 +13,6 @@ Note = (function() {
       top: yr * window.innerHeight + 'px'
     }).append($('<div>', {
       "class": 'card hoverable'
-    }).css({
-      display: 'block',
-      'background-color': 'MediumAquaMarine'
     }).append($('<div>').append(handle = $('<i>', {
       "class": 'material-icons'
     }).text('reorder')).append($('<i>', {
@@ -30,10 +27,7 @@ Note = (function() {
       "class": 'card-content white-text'
     }).css({
       'padding-top': '0px'
-    }).append(this.textEntry = $('<div>').css({
-      height: '100%',
-      cursor: 'text'
-    }).text(content))));
+    }).append(this.textEntry = $('<div>').text(content))));
     this.textEntry.focusout((function(_this) {
       return function() {
         var noteData;
@@ -50,10 +44,7 @@ Note = (function() {
           return function() {
             return _this.textEntry.focusout();
           };
-        })(this),
-        'shift+enter': function() {
-          return alert('shiftentered');
-        }
+        })(this)
       }
     });
     this.domNote.draggable({
