@@ -22,6 +22,7 @@ As for configuration, the application is hosted on [Heroku](https://www.heroku.c
 # Mongo and Redis
 For the application to access Mongo and Redis in your local environment, add a `.env` file to the repo root like this:
 ```bash
+# .env
 DEBUG=TRUE
 PYTHONUNBUFFERED=TRUE
 MONGODB_URI='mongodb://localhost:27017/scrumtious'
@@ -42,6 +43,6 @@ $ npm install -g coffee-script
 From there, you can hit `cake` to get more information on building/testing.
 
 # When Contributing:
-- Contact [Andy](https://andrewdbooth.me) for information on where to help.
-- Checkout and make pull requests to `dev`.
+- Contact [Andy](https://andrewdbooth.me) for information on where to help
+- Checkout and make pull requests to `dev`
 - *[`TODO`](http://scrumtio.us/Scrumtious/db5f1e5b6be063a498a80e1cea8cb6e7fe2137af)*
