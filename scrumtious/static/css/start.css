@@ -1,42 +1,35 @@
 html {
-    position: relative;
-    min-height: 100%;
-}
+  position: relative;
+  min-height: 100%; }
 
 body {
-    color: white;
-    background-color: MediumAquaMarine;
-    padding-top: 200px;
-    margin-bottom: 50px;
-}
+  color: Snow;
+  background-color: MediumAquaMarine;
+  padding-top: 200px;
+  margin-bottom: 50px; }
 
 .container {
-    max-width: 500px;
-    padding-bottom: 30px;
-}
+  max-width: 500px;
+  padding-bottom: 30px; }
 
 .input-field label {
-    color: white;
-}
+  color: Snow; }
 .input-field input[type=text]:focus + label {
-     color: white;
-}
+  color: Snow; }
 .input-field input[type=text]:focus {
-     border-bottom: 1px solid white;
-     box-shadow: 0 1px 0 0 white;
-}
+  border-bottom: 1px solid Snow;
+  box-shadow: 0 1px 0 0 Snow; }
 .input-field input[type=email]:focus + label {
-     color: white;
-}
+  color: Snow; }
 .input-field input[type=email]:focus {
-     border-bottom: 1px solid white;
-     box-shadow: 0 1px 0 0 white;
-}
+  border-bottom: 1px solid Snow;
+  box-shadow: 0 1px 0 0 Snow; }
+
 .btn {
-    color: MediumAquaMarine;
-}
+  color: MediumAquaMarine; }
 
 .chip {
-    margin-right: 3px;
-    margin-bottom: 5px;
-}
+  margin-right: 3px;
+  margin-bottom: 5px; }
+
+/*# sourceMappingURL=start.css.map */

@@ -1,0 +1,57 @@
+@import _common
+
+html, body
+  background-color: $primary-color
+
+html, body, table, th
+  height: 100%
+
+nav
+  position: fixed
+
+.nav-wrapper
+  background-color: $highlight-color
+
+table
+  width: 100%
+  border: 0
+  color: $highlight-color
+
+  th
+    font-size: 30px
+    text-align: center
+    vertical-align: middle
+    border-right: 1px solid $highlight-color
+    -webkit-touch-callout: none
+    -webkit-user-select: none
+    -khtml-user-select: none
+    -moz-user-select: none
+    -ms-user-select: none
+    user-select: none
+
+#add_button
+  right: 90%
+  bottom: 5%
+
+.card
+  display: block
+  background-color: $highlight-color
+  color: $primary-color
+
+.card:hover
+  z-index: 5
+
+.card-content div
+  height: 100%
+  cursor: text
+
+note
+  display: block
+  position: fixed
+  width: 150px
+  cursor: pointer
+  font-family: 'Roboto Condensed', sans-serif
+  color: $primary-color
+
+div:focus
+  outline: none
