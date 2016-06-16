@@ -11,8 +11,9 @@ NoteManager = (function() {
     this.agent = agent;
     for (nid in noteDatas) {
       noteData = noteDatas[nid];
-      console.log(noteData);
-      this.addNote(noteData);
+      if (!(nid in this.notes)) {
+        this.addNote(noteData);
+      }
     }
   }
 
