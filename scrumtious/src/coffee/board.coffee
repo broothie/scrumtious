@@ -1,5 +1,5 @@
-# src/client/board.coffee becomes:
-### public/js/board.js ###
+# scrumtious/src/coffee/board.coffee becomes:
+### scrumtious/static/js/board.js ###
 
 # Globals for DOM
 agent = null

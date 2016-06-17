@@ -1,4 +1,4 @@
-# scrumtious/cs/models/Agent.coffee becomes:
+# scrumtious/src/coffee/models/Agent.coffee becomes:
 ### scrumtious/static/js/models/Agent.js ###
 
 class Agent
