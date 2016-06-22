@@ -4,7 +4,7 @@
   "website": "https://scrumtio.us",
   "repository": "https://github.com/adbooth/scrumtious",
   "scripts": {
-    "postdeploy": "purge.py"
+    "postdeploy": "python purge.py"
   },
   "env": {
     "DEBUG": {
