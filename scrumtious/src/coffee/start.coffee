@@ -1,5 +1,5 @@
-# src/client/start.coffee becomes:
-### public/js/start.js ###
+# scrumtious/src/coffee/start.coffee becomes:
+### scrumtious/static/js/start.js ###
 
 String::startsWith ?= (s) -> @[...s.length] is s
 

@@ -1,7 +1,10 @@
 {
   "name": "scrumtious",
-  "description": "",
+  "description": "A simple online scrumboard great for small, agile scrum teams",
+  "website": "https://scrumtio.us",
+  "repository": "https://github.com/adbooth/scrumtious",
   "scripts": {
+    "postdeploy": "python purge.py"
   },
   "env": {
     "DEBUG": {
