@@ -1,4 +1,4 @@
-# scrumtious/cs/models/NoteManager.coffee becomes:
+# scrumtious/src/coffee/models/NoteManager.coffee becomes:
 ### scrumtious/static/js/models/NoteManager.js ###
 
 class NoteManager

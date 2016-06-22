@@ -19,6 +19,7 @@
     <!-- CDN -->
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css"/>
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto+Condensed"/>
     <!-- Local -->
     <link rel="stylesheet" type="text/css" href="{{url_for('.static', filename='css/start.css')}}"/>
 
@@ -36,10 +37,10 @@
                 <input type="text" id="boardName" name="boardName" required>
                 <label for="boardName">Choose a name for your board</label>
             </div>
-            <!-- <div class="input-field">
-                <input type="email" id="email" class="validate" required>
+            <div class="input-field">
+                <input type="email" id="email" name="email" required>
                 <label for="email">Provide an email address</label>
-            </div> -->
+            </div>
             <div>
                 <button type="submit" class="btn white">Submit</button>
             </div>
