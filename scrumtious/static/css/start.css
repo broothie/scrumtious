@@ -1,3 +1,4 @@
+/* scrumtious/static/css/start.css */
 html {
   position: relative;
   min-height: 100%; }
@@ -5,8 +6,9 @@ html {
 body {
   color: Snow;
   background-color: MediumAquaMarine;
-  padding-top: 200px;
-  margin-bottom: 50px; }
+  padding-top: 150px;
+  margin-bottom: 50px;
+  font-family: "Roboto Condensed", sans-serif; }
 
 .container {
   max-width: 500px;

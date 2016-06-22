@@ -1,4 +1,4 @@
-# scrumtious/cs/models/Note.coffee becomes:
+# scrumtious/src/coffee/models/Note.coffee becomes:
 ### scrumtious/static/js/models/Note.js ###
 
 

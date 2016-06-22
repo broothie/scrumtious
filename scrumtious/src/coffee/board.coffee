@@ -1,5 +1,5 @@
-# src/client/board.coffee becomes:
-### public/js/board.js ###
+# scrumtious/src/coffee/board.coffee becomes:
+### scrumtious/static/js/board.js ###
 
 # Globals for DOM
 agent = null
@@ -21,3 +21,11 @@ sendLink = ->
   subject = "Scrumtio.us scrumboard for our project"
   body = "Check it out: #{window.location.href}"
   window.open "mailto:?subject=#{subject}&body=#{body}"
+
+sendEmails = ->
+  emailString = prompt 'List the email addresses you want to send this scrumboard to, separated by commas'
+  [..., boardId] = document.location.pathname.split '/'
+  $.post '/email', {
+    boardId: boardId
+    emailString: emailString
+  }
