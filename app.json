@@ -7,14 +7,14 @@
     "postdeploy": "python purge.py"
   },
   "env": {
+    "SECRET_KEY": {
+      "generator": "secret"
+    },
     "DEBUG": {
       "required": true
     },
     "PYTHONUNBUFFERED": {
       "required": true
-    },
-    "SECRET_KEY": {
-      "generator": "secret"
     },
     "GMAIL_USERNAME": {
       "required": true
@@ -23,9 +23,6 @@
       "required": true
     },
     "MONGODB_URI": {
-      "required": true
-    },
-    "MONGO_PATH": {
       "required": true
     },
     "REDISCLOUD_URL": {
