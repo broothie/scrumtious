@@ -13,19 +13,23 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js" defer></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.10/clipboard.min.js" defer></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js" defer></script>
-    <!-- Lib -->
-    <script type="text/javascript" src="{{url_for('.static', filename='lib/js.cookie.min.js')}}" defer></script>
-    <script type="text/javascript" src="{{url_for('.static', filename='lib/medium.min.js')}}" defer></script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/js-cookie/js-cookie/master/src/js.cookie.js" defer></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/rangy/1.3.0/rangy-core.min.js" defer></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/rangy/1.3.0/rangy-classapplier.min.js" defer></script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/jzaefferer/undo/master/undo.js" defer></script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/jakiestfu/Medium.js/master/medium.min.js" defer></script>
     <!-- Local -->
     <script type="text/javascript" src="{{url_for('.static', filename='js/models/Agent.js')}}" defer></script>
     <script type="text/javascript" src="{{url_for('.static', filename='js/models/NoteManager.js')}}" defer></script>
     <script type="text/javascript" src="{{url_for('.static', filename='js/models/Note.js')}}" defer></script>
     <script type="text/javascript" src="{{url_for('.static', filename='js/board.js')}}" defer></script>
 
-    <!-- CSS -->
+    <!-- ### CSS ### -->
+    <!-- CDN -->
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css"/>
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto+Condensed"/>
+    <!-- Local -->
     <link rel="stylesheet" type="text/css" href="{{url_for('.static', filename='css/board.css')}}"/>
 
     <!-- Page stuff-->
@@ -34,6 +38,7 @@
     <meta name="description" content="A simple online scrumboard great for small, agile scrum teams."/>
     <meta name="keywords" content="scrumtious, scrumptious, scrumboard, scrum, agile, board, note"/>
     <meta name="author" content="Andrew D. Booth"/>
+    <meta name="author-website" content="https://andrewdbooth.me"/>
 </head>
 <body>
     <nav>
