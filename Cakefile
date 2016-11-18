@@ -8,7 +8,6 @@ task 'spin', 'spins up background tasks', ->
 
 # Storage tasks
 task 'storage', 'runs storage servers', ->
-  # invoke.parallel ['storage:mongo', 'storage:redis']
   invoke 'storage:mongo'
   invoke 'storage:redis'
 
