@@ -10,13 +10,16 @@ from flask import request, redirect, render_template
 from scrumtious import app, mongo
 
 def send_email(addresses, subject, message):
-    server = smtplib.SMTP('smtp.gmail.com:587')
-    server.starttls()
-    server.login(app.config['GMAIL_USERNAME'], app.config['GMAIL_PASSWORD'])
-    server.sendmail('%s@gmail.com' % app.config['GMAIL_USERNAME'],
-                    addresses,
-                    'Subject: %s\n\n%s' % (subject, message))
-    server.quit()
+    try:
+        server = smtplib.SMTP('smtp.gmail.com:587')
+        server.starttls()
+        server.login(app.config['GMAIL_USERNAME'], app.config['GMAIL_PASSWORD'])
+        server.sendmail('%s@gmail.com' % app.config['GMAIL_USERNAME'],
+                        addresses,
+                        'Subject: %s\n\n%s' % (subject, message))
+        server.quit()
+    except:
+        pass
 
 
 creator_message = '''Hi!
