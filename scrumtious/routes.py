@@ -48,10 +48,10 @@ def index():
             'notes': {}
         })
 
-        # Send email to creator
-        send_email(request.form['email'],
-                      'Link for the scrumboard %s' % boardName,
-                      creator_message % (boardName, singleTokenBoardName, boardId))
+        # # Send email to creator
+        # send_email(request.form['email'],
+        #               'Link for the scrumboard %s' % boardName,
+        #               creator_message % (boardName, singleTokenBoardName, boardId))
 
         # Redirect user to their new board
         return redirect('/%s/%s' % (singleTokenBoardName, boardId))
@@ -82,8 +82,8 @@ https://scrumtio.us
 @app.route('/email', methods=['POST'])
 def email():
     dbItem = mongo.db.boards.find_one({'boardId': request.form['boardId']})
-    if dbItem:
-        send_email(request.form['emailString'].replace(' ', '').split(','),
-                   'Scrumboard for our project',
-                   share_message % (dbItem['boardName'], dbItem['singleTokenBoardName'], dbItem['boardId']))
+    # if dbItem:
+    #     send_email(request.form['emailString'].replace(' ', '').split(','),
+    #                'Scrumboard for our project',
+    #                share_message % (dbItem['boardName'], dbItem['singleTokenBoardName'], dbItem['boardId']))
     return ''
